@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Meridian — Design That Moves</title>
+  <meta name="description" content="Studio Meridian is an independent design practice crafting brand identities, digital products, and experiences that move people." />
+  <style>
+    :root {
+      --bg: #0d0d10;
+      --bg-soft: #15151b;
+      --surface: #1b1b23;
+      --ink: #f5f4f0;
+      --ink-soft: #a7a6b0;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #e8ff54;
+      --accent-2: #7b6cff;
+      --max: 1180px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+    /* ---------- Nav ---------- */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(13, 13, 16, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      font-weight: 700; font-size: 20px; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .brand .dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--accent); display: inline-block;
+    }
+    .nav-links { display: flex; gap: 34px; align-items: center; }
+    .nav-links a { color: var(--ink-soft); font-size: 15px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      border: 1px solid var(--line); border-radius: 100px;
+      padding: 10px 20px; font-size: 14px; color: var(--ink);
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .nav-cta:hover { background: var(--accent); color: #0d0d10; border-color: var(--accent); }
+    .menu-btn { display: none; background: none; border: 0; color: var(--ink); font-size: 26px; cursor: pointer; }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 120px 0 90px; }
+    .hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--ink-soft); font-size: 13px; letter-spacing: 0.18em;
+      text-transform: uppercase; margin-bottom: 30px;
+    }
+    .hero .eyebrow .pulse {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(232, 255, 84, 0.6);
+      animation: pulse 2.4s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(232, 255, 84, 0.5); }
+      70% { box-shadow: 0 0 0 12px rgba(232, 255, 84, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(232, 255, 84, 0); }
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 8vw, 6rem);
+      line-height: 0.98; letter-spacing: -0.04em; font-weight: 700;
+      max-width: 15ch;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p.lead {
+      margin-top: 30px; max-width: 52ch; font-size: clamp(1.05rem, 2vw, 1.3rem);
+      color: var(--ink-soft);
+    }
+    .hero-actions { margin-top: 42px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 28px; border-radius: 100px; font-size: 16px; font-weight: 500;
+      transition: transform 0.25s var(--ease), background 0.25s;
+    }
+    .btn-primary { background: var(--accent); color: #0d0d10; }
+    .btn-primary:hover { transform: translateY(-3px); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+    .btn-ghost:hover { border-color: var(--ink-soft); }
+
+    .marquee {
+      margin-top: 90px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: 22px 0; overflow: hidden; white-space: nowrap;
+    }
+    .marquee-track { display: inline-block; animation: scroll 26s linear infinite; }
+    .marquee-track span {
+      font-size: clamp(1.4rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em;
+      color: var(--ink-soft); margin: 0 26px; opacity: 0.55;
+    }
+    .marquee-track span .sep { color: var(--accent); }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ---------- Sections ---------- */
+    section { padding: 100px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; margin-bottom: 56px; flex-wrap: wrap; }
+    .section-head .tag { color: var(--accent); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .section-head h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -0.03em; line-height: 1.02; font-weight: 700; margin-top: 14px;
+    }
+    .section-head p { color: var(--ink-soft); max-width: 40ch; font-size: 1.05rem; }
+
+    /* Services */
+    .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+    .service {
+      background: var(--bg); padding: 40px 34px; transition: background 0.3s;
+      display: flex; flex-direction: column; min-height: 280px;
+    }
+    .service:hover { background: var(--surface); }
+    .service .num { color: var(--ink-soft); font-size: 13px; letter-spacing: 0.1em; }
+    .service h3 { font-size: 1.5rem; margin-top: 20px; letter-spacing: -0.02em; }
+    .service p { color: var(--ink-soft); margin-top: 14px; font-size: 0.98rem; flex-grow: 1; }
+    .service .arrow { margin-top: 24px; color: var(--accent); font-size: 22px; transition: transform 0.3s var(--ease); }
+    .service:hover .arrow { transform: translate(6px, -6px); }
+
+    /* Work */
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .project {
+      position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 3;
+      display: flex; align-items: flex-end; padding: 30px;
+      border: 1px solid var(--line); cursor: pointer;
+    }
+    .project::before { content: ""; position: absolute; inset: 0; z-index: 0; transition: transform 0.6s var(--ease); }
+    .project:hover::before { transform: scale(1.06); }
+    .p1::before { background: linear-gradient(135deg, #7b6cff, #241b52); }
+    .p2::before { background: linear-gradient(135deg, #e8ff54, #4a5a10); }
+    .p3::before { background: linear-gradient(135deg, #ff7a59, #4a1e12); }
+    .p4::before { background: linear-gradient(135deg, #29e0c4, #0d4a41); }
+    .project .meta { position: relative; z-index: 1; }
+    .project .meta .cat { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
+    .project .meta h3 { font-size: 1.7rem; letter-spacing: -0.02em; margin-top: 6px; color: #0d0d10; font-weight: 700; }
+    .p1 .meta h3, .p3 .meta h3, .p4 .meta h3 { color: #fff; }
+    .project .meta .cat { color: rgba(0,0,0,0.7); }
+    .p1 .meta .cat, .p3 .meta .cat, .p4 .meta .cat { color: rgba(255,255,255,0.8); }
+
+    /* About / stats */
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+    .about-grid p { color: var(--ink-soft); font-size: 1.15rem; margin-bottom: 20px; }
+    .about-grid p strong { color: var(--ink); font-weight: 600; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .stat { border-top: 1px solid var(--line); padding-top: 18px; }
+    .stat .n { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+    .stat .n span { color: var(--accent); }
+    .stat .l { color: var(--ink-soft); font-size: 0.95rem; margin-top: 8px; }
+
+    /* Process */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .step { border-top: 2px solid var(--accent); padding-top: 22px; }
+    .step .s-num { font-size: 13px; color: var(--accent); letter-spacing: 0.1em; }
+    .step h4 { font-size: 1.25rem; margin-top: 12px; letter-spacing: -0.01em; }
+    .step p { color: var(--ink-soft); margin-top: 10px; font-size: 0.95rem; }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--surface), var(--bg-soft));
+      border: 1px solid var(--line); border-radius: 28px;
+      padding: clamp(50px, 8vw, 90px); text-align: center; position: relative; overflow: hidden;
+    }
+    .cta::after {
+      content: ""; position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,255,84,0.18), transparent 70%);
+      top: -150px; right: -100px;
+    }
+    .cta h2 { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 1; position: relative; }
+    .cta p { color: var(--ink-soft); margin-top: 20px; font-size: 1.15rem; position: relative; }
+    .cta .btn { margin-top: 36px; position: relative; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 60px 0 40px; }
+    .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .foot-grid .brand { font-size: 24px; }
+    .foot-cols { display: flex; gap: 70px; flex-wrap: wrap; }
+    .foot-col h5 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px; }
+    .foot-col a { display: block; color: var(--ink); margin-bottom: 10px; font-size: 15px; transition: color 0.2s; }
+    .foot-col a:hover { color: var(--accent); }
+    .foot-bottom { margin-top: 50px; padding-top: 26px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; color: var(--ink-soft); font-size: 14px; flex-wrap: wrap; gap: 12px; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .menu-btn { display: block; }
+      .services { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      section { padding: 70px 0; }
+      .hero { padding: 70px 0 60px; }
+    }
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="#top"><span class="dot"></span>Studio Meridian</a>
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="#services">Services</a>
+          <a href="#studio">Studio</a>
+          <a href="#process">Process</a>
+          <a class="nav-cta" href="#contact">Start a project</a>
+        </div>
+        <button class="menu-btn" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').style.display = (getComputedStyle(document.querySelector('.nav-links')).display==='none'?'flex':'none')">☰</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow"><span class="pulse"></span>Independent design practice · Est. 2016</span>
+        <h1>We design brands that <em>refuse to be ignored.</em></h1>
+        <p class="lead">Studio Meridian is a small, senior team building identities, digital products, and experiences for founders who care about the details — because everyone else notices them too.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Start a project →</a>
+          <a class="btn btn-ghost" href="#work">See the work</a>
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Branding <b class="sep">✦</b> Web Design <b class="sep">✦</b> Product <b class="sep">✦</b> Motion <b class="sep">✦</b> Art Direction <b class="sep">✦</b> Strategy <b class="sep">✦</b></span>
+          <span>Branding <b class="sep">✦</b> Web Design <b class="sep">✦</b> Product <b class="sep">✦</b> Motion <b class="sep">✦</b> Art Direction <b class="sep">✦</b> Strategy <b class="sep">✦</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="tag">What we do</span>
+            <h2>A studio built for<br />the whole picture.</h2>
+          </div>
+          <p>From the first sketch to the final pixel, we handle the parts that make a brand feel inevitable.</p>
+        </div>
+        <div class="services reveal">
+          <div class="service">
+            <span class="num">01</span>
+            <h3>Brand Identity</h3>
+            <p>Naming, logo systems, typography, and voice — the visual language that makes you unmistakable in a crowded feed.</p>
+            <span class="arrow">↗</span>
+          </div>
+          <div class="service">
+            <span class="num">02</span>
+            <h3>Digital Product</h3>
+            <p>Websites and product interfaces designed to convert, engineered to load fast, and built to grow with you.</p>
+            <span class="arrow">↗</span>
+          </div>
+          <div class="service">
+            <span class="num">03</span>
+            <h3>Art Direction</h3>
+            <p>Campaigns, motion, and photography direction that carry one clear idea across every surface you touch.</p>
+            <span class="arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="tag">Selected work</span>
+            <h2>Recent projects.</h2>
+          </div>
+          <p>A snapshot of what happens when strategy and craft share a table.</p>
+        </div>
+        <div class="work-grid">
+          <a class="project p1 reveal" href="#contact">
+            <div class="meta"><div class="cat">Branding · Fintech</div><h3>Northwind Pay</h3></div>
+          </a>
+          <a class="project p2 reveal" href="#contact">
+            <div class="meta"><div class="cat">Web · E-commerce</div><h3>Verde Botanicals</h3></div>
+          </a>
+          <a class="project p3 reveal" href="#contact">
+            <div class="meta"><div class="cat">Product · SaaS</div><h3>Cadence Analytics</h3></div>
+          </a>
+          <a class="project p4 reveal" href="#contact">
+            <div class="meta"><div class="cat">Identity · Hospitality</div><h3>The Atlas Hotel</h3></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio / About -->
+    <section id="studio">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="reveal">
+            <span class="tag">The studio</span>
+            <p style="margin-top:18px;"><strong>We're a compact team of designers, writers, and builders</strong> who believe great design is a business advantage, not a decoration.</p>
+            <p>No account managers, no telephone game — you work directly with the people making the work. We take on a handful of projects at a time so each one gets our full attention.</p>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><div class="n">120<span>+</span></div><div class="l">Projects shipped</div></div>
+            <div class="stat"><div class="n">9<span>yrs</span></div><div class="l">In practice</div></div>
+            <div class="stat"><div class="n">4<span>×</span></div><div class="l">Design awards</div></div>
+            <div class="stat"><div class="n">30<span>+</span></div><div class="l">Happy founders</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <span class="tag">How we work</span>
+            <h2>Four steps, no surprises.</h2>
+          </div>
+          <p>A clear, collaborative process that keeps you in the loop from kickoff to launch.</p>
+        </div>
+        <div class="steps reveal">
+          <div class="step"><div class="s-num">STEP 01</div><h4>Discover</h4><p>We dig into your goals, audience, and market to find the angle only you can own.</p></div>
+          <div class="step"><div class="s-num">STEP 02</div><h4>Define</h4><p>Strategy, positioning, and creative direction — agreed before a single pixel moves.</p></div>
+          <div class="step"><div class="s-num">STEP 03</div><h4>Design</h4><p>We craft the identity and interfaces in tight, transparent iterations with you.</p></div>
+          <div class="step"><div class="s-num">STEP 04</div><h4>Deliver</h4><p>Polished files, guidelines, and hands-on support so you can launch with confidence.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="cta reveal">
+          <h2>Let's build something<br />worth remembering.</h2>
+          <p>Tell us what you're working on. We reply to every enquiry within two business days.</p>
+          <a class="btn btn-primary" href="mailto:hello@studiomeridian.com">hello@studiomeridian.com →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="brand" href="#top"><span class="dot"></span>Studio Meridian</a>
+          <p style="color:var(--ink-soft); margin-top:14px; max-width:30ch;">Design that moves people — and metrics.</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h5>Explore</h5>
+            <a href="#work">Work</a>
+            <a href="#services">Services</a>
+            <a href="#studio">Studio</a>
+            <a href="#process">Process</a>
+          </div>
+          <div class="foot-col">
+            <h5>Connect</h5>
+            <a href="mailto:hello@studiomeridian.com">Email</a>
+            <a href="#">Instagram</a>
+            <a href="#">Dribbble</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© <span id="year"></span> Studio Meridian. All rights reserved.</span>
+        <span>Made with care, not templates.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Close mobile menu on link tap
+    document.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => {
+      if (window.innerWidth <= 860) document.querySelector('.nav-links').style.display = 'none';
+    }));
+  </script>
+</body>
+</html>
