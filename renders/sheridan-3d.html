@@ -1,0 +1,745 @@
+<title>2111 S Sheridan — Stacked DADU · 3D Model</title>
+<meta name="description" content="Interactive 3D rendering of the stacked DADU over two 1-car garages at 2111 South Sheridan Ave, Tacoma WA — orbit, explode by floor, and cut away the roof." />
+<style>
+  :root{
+    color-scheme: light dark;
+    --paper:#eef1f4; --panel:#ffffff; --panel-2:#f6f8fa;
+    --ink:#12151a; --ink-2:#4a525c; --ink-3:#7c858f;
+    --line:rgba(18,21,26,.10); --line-2:rgba(18,21,26,.06);
+    --accent:#12796b; --accent-ink:#0c5349;
+    --shadow:0 1px 2px rgba(16,22,30,.06),0 8px 30px rgba(16,22,30,.10);
+    --sky-top:#dbe6ec; --sky-bot:#eef1f2;
+    --ground-tint:rgba(120,140,120,.0);
+    --radius:13px;
+    --mono:"SF Mono",ui-monospace,"Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:"Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0e1116; --panel:#161b22; --panel-2:#1b212b;
+      --ink:#eef1f4; --ink-2:#aeb7c2; --ink-3:#79828e;
+      --line:rgba(255,255,255,.12); --line-2:rgba(255,255,255,.06);
+      --accent:#2fbfaa; --accent-ink:#8fe6d8;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 40px rgba(0,0,0,.5);
+      --sky-top:#1a222c; --sky-bot:#0e1116;
+    }
+  }
+  :root[data-theme="light"]{
+    color-scheme: light;
+    --paper:#eef1f4; --panel:#ffffff; --panel-2:#f6f8fa;
+    --ink:#12151a; --ink-2:#4a525c; --ink-3:#7c858f;
+    --line:rgba(18,21,26,.10); --line-2:rgba(18,21,26,.06);
+    --accent:#12796b; --accent-ink:#0c5349;
+    --shadow:0 1px 2px rgba(16,22,30,.06),0 8px 30px rgba(16,22,30,.10);
+    --sky-top:#dbe6ec; --sky-bot:#eef1f2;
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#0e1116; --panel:#161b22; --panel-2:#1b212b;
+    --ink:#eef1f4; --ink-2:#aeb7c2; --ink-3:#79828e;
+    --line:rgba(255,255,255,.12); --line-2:rgba(255,255,255,.06);
+    --accent:#2fbfaa; --accent-ink:#8fe6d8;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 40px rgba(0,0,0,.5);
+    --sky-top:#1a222c; --sky-bot:#0e1116;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans); color:var(--ink); background:var(--paper);
+    -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  #stage{position:fixed; inset:0}
+  #scene{display:block; width:100%; height:100%; touch-action:none; cursor:grab}
+  #scene:active{cursor:grabbing}
+
+  /* ---- Title card ---- */
+  .card{
+    position:fixed; background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow); backdrop-filter:blur(8px);
+  }
+  #info{ top:18px; left:18px; width:300px; max-width:calc(100vw - 36px); overflow:hidden }
+  #info .hd{ padding:16px 18px 14px; border-bottom:1px solid var(--line-2) }
+  .eyebrow{ font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+    font-weight:700; display:flex; align-items:center; gap:7px }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%;background:var(--accent) }
+  #info h1{ font-size:19px; line-height:1.15; margin-top:9px; letter-spacing:-.01em; text-wrap:balance }
+  #info .addr{ font-size:12.5px; color:var(--ink-2); margin-top:5px; line-height:1.4 }
+  #info .tag{ font-size:11px; color:var(--ink-3); margin-top:9px; display:flex; gap:6px; flex-wrap:wrap }
+  #info .tag span{ border:1px solid var(--line); border-radius:100px; padding:3px 9px; white-space:nowrap }
+
+  .sched{ padding:12px 18px 15px }
+  .sched .st{ font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin-bottom:8px }
+  .row{ display:flex; justify-content:space-between; align-items:baseline; font-size:12.5px;
+    padding:4px 0; border-bottom:1px dotted var(--line-2) }
+  .row:last-child{ border-bottom:0 }
+  .row .k{ color:var(--ink-2); display:flex; align-items:center; gap:8px }
+  .row .k i{ width:9px;height:9px;border-radius:2px;display:inline-block;flex:0 0 auto;border:1px solid rgba(0,0,0,.15) }
+  .row .v{ font-variant-numeric:tabular-nums; font-weight:600; letter-spacing:-.01em }
+  .row.total{ margin-top:5px; padding-top:8px; border-top:1px solid var(--line); border-bottom:0 }
+  .row.total .k{ color:var(--ink); font-weight:600 }
+
+  .collapse-btn{ display:none }
+
+  /* ---- Dock ---- */
+  #dock{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:18px;
+    display:flex; align-items:stretch; gap:8px; padding:8px;
+    max-width:calc(100vw - 24px); flex-wrap:wrap; justify-content:center;
+  }
+  .seg{ display:flex; gap:3px; background:var(--panel-2); border:1px solid var(--line-2);
+    border-radius:11px; padding:4px }
+  .seg .lbl{ font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
+    align-self:center; padding:0 8px 0 6px; font-weight:700 }
+  button.b{
+    font-family:inherit; font-size:12.5px; font-weight:600; color:var(--ink-2);
+    background:transparent; border:0; border-radius:8px; padding:7px 11px; cursor:pointer;
+    letter-spacing:-.01em; transition:background .14s, color .14s; white-space:nowrap;
+  }
+  button.b:hover{ background:var(--line-2); color:var(--ink) }
+  button.b.on{ background:var(--accent); color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.15) }
+  :root[data-theme="dark"] button.b.on, @media (prefers-color-scheme:dark){ }
+  button.b:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+  .icon{ padding:7px 9px; font-size:14px }
+
+  #explodeWrap{ display:flex; align-items:center; gap:9px; padding:0 12px 0 6px }
+  #explodeWrap input[type=range]{ width:104px; accent-color:var(--accent) }
+
+  /* ---- Hint + legend toggle ---- */
+  #hint{ position:fixed; right:18px; bottom:18px; font-size:11.5px; color:var(--ink-3);
+    background:var(--panel); border:1px solid var(--line); border-radius:100px; padding:7px 13px;
+    box-shadow:var(--shadow); display:flex; gap:12px; align-items:center; transition:opacity .5s }
+  #hint b{ color:var(--ink-2); font-weight:600 }
+  #hint .sep{ width:1px; height:12px; background:var(--line) }
+
+  #themeBtn{ position:fixed; right:18px; top:18px; width:38px; height:38px; }
+  #themeBtn.card{ display:grid; place-items:center; cursor:pointer; font-size:16px; color:var(--ink-2) }
+  #themeBtn:hover{ color:var(--ink) }
+
+  @media (max-width:720px){
+    #info{ width:250px }
+    #info .sched{ display:none }
+    #hint{ display:none }
+    #dock{ gap:6px; padding:6px }
+    .seg .lbl{ display:none }
+  }
+</style>
+
+<div id="stage">
+  <canvas id="scene" aria-label="Interactive 3D model of the Sheridan Avenue stacked DADU"></canvas>
+</div>
+
+<div id="info" class="card">
+  <div class="hd">
+    <div class="eyebrow"><span class="dot"></span>Stacked DADU · Opt. 1</div>
+    <h1>Two-Unit DADU over Twin Garages</h1>
+    <div class="addr">2111 South Sheridan Ave · Tacoma, WA 98405<br>Parcel 7685002660</div>
+    <div class="tag"><span>40′ × 20′</span><span>3 levels</span><span>2 dwellings</span><span>2 garages</span></div>
+  </div>
+  <div class="sched">
+    <div class="st">Floor Area Schedule</div>
+    <div class="row"><span class="k"><i style="background:#9c9080"></i>Level 1 · garages + utility</span><span class="v">390 sf</span></div>
+    <div class="row"><span class="k"><i style="background:#5b6270"></i>Level 2 · dwelling A</span><span class="v">755 sf</span></div>
+    <div class="row"><span class="k"><i style="background:#3b404a"></i>Level 3 · dwelling B</span><span class="v">755 sf</span></div>
+    <div class="row"><span class="k"><i style="background:#7c5230"></i>Garages (2 × 205)</span><span class="v">410 sf</span></div>
+    <div class="row total"><span class="k">Total conditioned</span><span class="v">1,900 sf</span></div>
+  </div>
+</div>
+
+<div id="themeBtn" class="card" role="button" tabindex="0" title="Toggle light / dark">◐</div>
+
+<div id="dock">
+  <div class="seg">
+    <span class="lbl">View</span>
+    <button class="b on" data-view="all">Whole</button>
+    <button class="b" data-view="1">Lvl 1</button>
+    <button class="b" data-view="2">Lvl 2</button>
+    <button class="b" data-view="3">Lvl 3</button>
+  </div>
+  <div class="seg">
+    <span class="lbl">Explode</span>
+    <div id="explodeWrap"><input id="explode" type="range" min="0" max="100" value="0" aria-label="Explode floors"></div>
+  </div>
+  <div class="seg">
+    <button class="b icon on" id="roofBtn" title="Show / hide roof" aria-pressed="true">⌂ Roof</button>
+    <button class="b icon" id="spinBtn" title="Auto-rotate" aria-pressed="false">↻ Spin</button>
+    <button class="b icon" id="resetBtn" title="Reset view">⤢ Reset</button>
+  </div>
+</div>
+
+<div id="hint">
+  <span><b>Drag</b> orbit</span><span class="sep"></span>
+  <span><b>Scroll</b> zoom</span><span class="sep"></span>
+  <span><b>Explode</b> to peek inside</span>
+</div>
+
+<script>
+"use strict";
+(function(){
+/* ============================================================
+   Tiny flat-shaded 3D engine (painter's algorithm, canvas 2D).
+   Units are feet. Origin at building's NW-ground corner.
+   x → east (0..40)   y → up (0..)   z → south (0..20)
+   ============================================================ */
+const cv = document.getElementById('scene');
+const ctx = cv.getContext('2d');
+let W=0,H=0,DPR=1;
+
+/* ---------- palette (physical materials, theme-independent) ---------- */
+const MAT = {
+  base:   [156,144,128],   // level-1 warm stucco
+  mid:    [91,98,112],     // level-2 siding (lighter charcoal)
+  top:    [59,64,74],      // level-3 siding (charcoal)
+  trim:   [231,225,212],   // bone trim / fascia / floor bands
+  parapet:[38,42,49],
+  soffit: [214,208,196],
+  garage: [124,82,48],     // walnut door
+  garageP:[143,97,58],     // door panel highlight
+  glass:  [150,196,208],
+  glassLo:[96,150,166],
+  frame:  [238,234,224],
+  door:   [18,121,107],    // teal entry door
+  floorpl:[206,199,186],   // interior floor plate
+  wallInt:[224,220,210],   // interior partitions
+  stair:  [176,168,152],
+  grass:  [126,150,110],
+  grassLo:[108,132,94],
+  drive:  [190,188,182],
+  walk:   [201,199,193],
+  hvac:   [176,180,186],
+};
+
+/* ---------- geometry store ----------
+   face = { v:[[x,y,z]×n], c:[r,g,b], grp, cull, alpha, kind, sh }
+   grp ∈ lot, f1,f2,f3, i1,i2,i3, roof   (i* = interior, shown on explode/isolate)
+*/
+const faces = [];
+function addFace(v, c, opts={}){
+  faces.push(Object.assign({v, c, grp:'f1', cull:true, alpha:1, kind:'solid', sh:1}, opts));
+}
+// box with consistent per-face vertex order (each vertical face: BL,BR,TR,TL seen from outside)
+function box(x0,y0,z0, dx,dy,dz, c, opts={}){
+  const x1=x0+dx, y1=y0+dy, z1=z0+dz;
+  const C = (typeof c[0]==='number') ? {N:c,S:c,E:c,Wf:c,T:c,B:c} : c; // allow per-face colors
+  // North face (z=z0, normal -z): looking from north, east is -x... order BL,BR,TR,TL from outside
+  addFace([[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]], C.N, opts);
+  // South face (z=z1, +z)
+  addFace([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]], C.S, opts);
+  // East face (x=x1, +x)
+  addFace([[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]], C.E, opts);
+  // West face (x=x0, -x)
+  addFace([[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]], C.Wf, opts);
+  // Top (y=y1)
+  if(opts.top!==false){
+    const to=Object.assign({},opts,{kind:opts.topKind||opts.kind});
+    addFace([[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]], C.T, to);
+  }
+  // Bottom (y=y0)
+  if(opts.bottom) addFace([[x0,y0,z1],[x0,y0,z0],[x1,y0,z0],[x1,y0,z1]], C.B, opts);
+}
+// flat horizontal slab (single top quad) — for floor plates, ground
+function slab(x0,z0,dx,dz,y,c,opts={}){
+  addFace([[x0,y,z0],[x0,y,z0+dz],[x0+dx,y,z0+dz],[x0+dx,y,z0]], c, opts);
+}
+// window / door panel on an exterior wall, pushed out along its normal
+function panel(face, x0,y0,z0, dx,dy,dz, c, opts={}){
+  box(x0,y0,z0,dx,dy,dz,c,opts);
+}
+
+/* ============================================================
+   BUILDING  (40 x 20, three 10-ft floors + parapet)
+   ============================================================ */
+const FH=10;                       // floor-to-floor
+const OUT=0.02;                    // window push-out
+function windowE(z0,zh, y0,yh, grp){ // east face window (x=40)
+  addFace([[40+OUT,y0,z0+zh],[40+OUT,y0,z0],[40+OUT,y0+yh,z0],[40+OUT,y0+yh,z0+zh]], MAT.glass,
+    {grp, cull:true, kind:'window', z0,zh, orient:'E', y0,yh});
+}
+function windowN(x0,xw, y0,yh, grp){ // north face window (z=0)
+  addFace([[x0+xw,y0,-OUT],[x0,y0,-OUT],[x0,y0+yh,-OUT],[x0+xw,y0+yh,-OUT]], MAT.glass,
+    {grp, cull:true, kind:'window', x0,xw, orient:'N', y0,yh});
+}
+function windowW(z0,zh, y0,yh, grp){ // west face window (x=0)
+  addFace([[-OUT,y0,z0],[-OUT,y0,z0+zh],[-OUT,y0+yh,z0+zh],[-OUT,y0+yh,z0]], MAT.glass,
+    {grp, cull:true, kind:'window', z0,zh, orient:'W', y0,yh});
+}
+function windowS(x0,xw, y0,yh, grp){ // south face window (z=20)
+  addFace([[x0,y0,20+OUT],[x0+xw,y0,20+OUT],[x0+xw,y0+yh,20+OUT],[x0,y0+yh,20+OUT]], MAT.glass,
+    {grp, cull:true, kind:'window', x0,xw, orient:'S', y0,yh});
+}
+
+// --- shell: each floor a hollow-looking box (solid, windows overlaid) ---
+function floorShell(yBase, wallColor, grp){
+  box(0,yBase,0, 40,FH,20, wallColor, {grp, kind:'siding', topKind:'ceiling'});
+  // floor band / reveal at the base of the floor
+  box(-0.12,yBase-0.35,-0.12, 40.24,0.55,20.24, MAT.trim, {grp, kind:'trim', top:false});
+}
+
+// Level 1 — stucco base
+floorShell(0, MAT.base, 'f1');
+// garage doors (east face) — two 8'w × 8'h, walnut with panels
+function garageDoor(z0){
+  const gc={N:MAT.garage,S:MAT.garage,E:MAT.garage,Wf:MAT.garage,T:MAT.garageP,B:MAT.garage};
+  panel('E', 40+OUT, 0.6, z0, 0.0, 8.0, 8.0, MAT.garage, {grp:'f1', kind:'garage'});
+  // horizontal panel reveals
+  for(let i=1;i<4;i++){
+    addFace([[40+OUT*2,0.6+i*2,z0+8],[40+OUT*2,0.6+i*2,z0],[40+OUT*2,0.6+i*2+0.06,z0],[40+OUT*2,0.6+i*2+0.06,z0+8]],
+      MAT.garageP,{grp:'f1',cull:true,kind:'trim'});
+  }
+}
+garageDoor(1.2);    // north garage
+garageDoor(11.0);   // south garage
+// entry man-door (west face, at stair)  + concrete stoop
+panel('W', -OUT, 0, 1.6, 0.0, 7.0, 3.0, MAT.door, {grp:'f1', kind:'door'});
+box(-3.4,-0.15,0.4, 3.4,0.2,7.0, MAT.walk, {grp:'lot', kind:'walk'});
+// small utility windows on north (ground)
+windowN(3.0,2.5, 4.0,2.5, 'f1');
+
+// Level 2 — dwelling A
+floorShell(FH, MAT.mid, 'f2');
+// Level 3 — dwelling B
+floorShell(FH*2, MAT.top, 'f3');
+
+// Repeated fenestration for the two dwellings (levels 2 & 3)
+[FH, FH*2].forEach((yb, i)=>{
+  const g = i===0?'f2':'f3';
+  // North: two living-room windows (5036 XO), 5w × 3.5h, sill +3
+  windowN(11.5,5, yb+3, 3.5, g);
+  windowN(18.5,5, yb+3, 3.5, g);
+  // East: two bedroom egress windows (5036 XO), sill +3
+  windowE(2.5,5, yb+3, 3.5, g);
+  windowE(12.5,5, yb+3, 3.5, g);
+  // West: stair window (3036 SH), sill +3.5
+  windowW(3,3, yb+3.2, 3.4, g);
+  // South: small kitchen + bath windows
+  windowS(23,3.5, yb+3.5, 3.0, g);
+  windowS(2.5,3, yb+3.5, 3.0, g);
+});
+
+// ---- Parapet / flat roof ----
+box(0,FH*3,0, 40,1.4,20, MAT.parapet, {grp:'roof', kind:'parapet'});
+// inset roof deck (slightly darker, below parapet top)
+slab(1,1, 38,18, FH*3+0.9, [30,33,39], {grp:'roof', cull:false});
+// rooftop mini-split condenser (heat pump)
+box(4,FH*3+0.9,2, 3,1.6,2.4, MAT.hvac, {grp:'roof', kind:'hvac'});
+box(4.2,FH*3+2.4,2.2, 2.6,0.15,2.0, [120,124,130], {grp:'roof'});
+// coping cap highlight
+box(-0.15,FH*3+1.25,-0.15, 40.3,0.22,20.3, MAT.trim, {grp:'roof', kind:'trim'});
+
+// ---- corner trim boards (vertical), split per floor so isolation is clean ----
+[['f1',0],['f2',FH],['f3',FH*2]].forEach(([g,yb])=>{
+  [[0,0],[40,0],[0,20],[40,20]].forEach(([cx,cz])=>{
+    box(cx-0.16,yb,cz-0.16, 0.32,FH,0.32, MAT.trim, {grp:g, kind:'trim'});
+  });
+});
+
+/* ============================================================
+   INTERIOR  (partitions + floor plates, shown when exploded/isolated)
+   Levels 2 & 3 share a layout; level 1 = garages + utility + stair.
+   ============================================================ */
+function floorPlate(yb, grp){ slab(0.35,0.35, 39.3,19.3, yb+0.05, MAT.floorpl, {grp, cull:false}); }
+// wall segment between (x1,z1)-(x2,z2)
+function wall(yb, x1,z1,x2,z2, h, grp, col){
+  col = col||MAT.wallInt;
+  const t=0.35, hh=h||6.5;
+  if(Math.abs(x2-x1)>Math.abs(z2-z1)){ // runs E-W
+    box(Math.min(x1,x2),yb+0.1,z1-t/2, Math.abs(x2-x1),hh,t, col, {grp, kind:'int', cull:false});
+  }else{ // runs N-S
+    box(x1-t/2,yb+0.1,Math.min(z1,z2), t,hh,Math.abs(z2-z1), col, {grp, kind:'int', cull:false});
+  }
+}
+const INT={kind:'int', cull:false}; // helper opts for interior objects
+// simple stair (a run of treads climbing north→south on the west end)
+function stair(yb, grp){
+  const n=9, run=0.95, x=1.4, w=3.6;
+  for(let i=0;i<n;i++){
+    box(x, yb+0.15+i*(FH/ n), 2.2+i*run, w, 0.5, run+0.1, MAT.stair, {grp, kind:'stair', cull:false});
+  }
+}
+
+// ---------- Level 1 interior ----------
+floorPlate(0,'i1');
+stair(0,'i1');
+// garages: partition between the two garages + wall to utility
+wall(0, 22,0, 22,20, 8.2, 'i1');           // garages / utility divider (N-S)
+wall(0, 22,9.7, 40,9.7, 8.2, 'i1');        // between the two garages (E-W)
+wall(0, 12,2, 12,18, 7, 'i1');             // stair core / utility divider
+wall(0, 12,9.7, 22,9.7, 7, 'i1');          // utility N/S split
+// water heaters / stacked laundry blocks
+box(13,0.1,2.4, 1.6,3.4,1.6,[196,192,184],{grp:'i1',...INT});
+box(13,0.1,15.8,1.6,3.4,1.6,[196,192,184],{grp:'i1',...INT});
+
+// ---------- Levels 2 & 3 interior (identical) ----------
+function dwelling(yb, grp){
+  floorPlate(yb,grp);
+  stair(yb,grp);
+  // main cross wall separating west (living) from east rooms
+  wall(yb, 22,0, 22,7.5, 7, grp);          // bath west wall (upper)
+  wall(yb, 22,12.5, 22,20, 7, grp);        // kitchen east edge (lower) — leaves hall open
+  // bathroom enclosure (NE-center)
+  wall(yb, 22,7.5, 30,7.5, 7, grp);        // bath south wall
+  wall(yb, 30,0, 30,7.5, 7, grp);          // bath east wall
+  // shower block
+  box(22.4,yb+0.1,0.4, 3.0,7,3.0,[210,214,218],{grp,...INT});
+  // bedrooms: divider between BR2 (north) and BR1 (south)
+  wall(yb, 30,9.6, 40,9.6, 7, grp);        // BR2 / BR1 party wall
+  wall(yb, 30,7.5, 30,20, 7, grp);         // bedrooms west (closet) wall
+  // closets
+  box(30,yb+0.1,7.6, 0.6,7,2.0,MAT.wallInt,{grp,...INT});
+  box(30,yb+0.1,11.4,0.6,7,2.0,MAT.wallInt,{grp,...INT});
+  // kitchen counter + island (lower center)
+  box(22.6,yb+0.1,13, 0.7,3,6.6,[150,120,92],{grp,...INT});      // range/sink run
+  box(24,yb+0.1,13.6, 4,0.9,0.7,[150,120,92],{grp,...INT});       // island
+  // low sofa hint in living
+  box(4.5,yb+0.1,13.5, 6,1.6,2.4,[120,132,144],{grp,...INT});
+}
+dwelling(FH,'i2');
+dwelling(FH*2,'i3');
+
+// room labels (world anchor, shown when that floor is opened)
+const LABELS = [
+  {t:'1 CAR GARAGE', p:[31,4,5],  g:'i1'},
+  {t:'1 CAR GARAGE', p:[31,4,15], g:'i1'},
+  {t:'UTILITY', p:[17,4,5.5], g:'i1'}, {t:'UTILITY', p:[17,4,14.5], g:'i1'},
+  {t:'STAIR', p:[3.6,4,10], g:'i1'},
+  {t:'LIVING', p:[11,4,6], g:'i2'}, {t:'KITCHEN', p:[26,4,16], g:'i2'},
+  {t:'BATH', p:[26,4,4], g:'i2'}, {t:'BED 2', p:[35,4,4.5], g:'i2'}, {t:'BED 1', p:[35,4,15], g:'i2'},
+  {t:'LIVING', p:[11,4,6], g:'i3'}, {t:'KITCHEN', p:[26,4,16], g:'i3'},
+  {t:'BATH', p:[26,4,4], g:'i3'}, {t:'BED 2', p:[35,4,4.5], g:'i3'}, {t:'BED 1', p:[35,4,15], g:'i3'},
+];
+const LEVELTAGS = [
+  {t:'LEVEL 1 · GARAGES + UTILITY', p:[20,3.2,10], g:'i1'},
+  {t:'LEVEL 2 · DWELLING A', p:[20,3.2,10], g:'i2'},
+  {t:'LEVEL 3 · DWELLING B', p:[20,3.2,10], g:'i3'},
+];
+
+/* ============================================================
+   SITE  (long 34 x 130 parcel, building near the alley end)
+   ============================================================ */
+// grass lot — building sits with its east (garage) wall toward the alley/driveway
+slab(-58,-7, 108,34, -0.2, MAT.grass, {grp:'lot', cull:false});
+slab(-58,-7, 108,34, -0.19, MAT.grassLo, {grp:'lot', cull:false, kind:'grass2'});
+// driveway apron in front of garages (east)
+slab(40,-1, 12,22, -0.16, MAT.drive, {grp:'lot', cull:false});
+// concrete pad under building
+slab(-0.6,-0.6, 41.2,21.2, -0.1, MAT.walk, {grp:'lot', cull:false});
+
+/* ============================================================
+   PRECOMPUTE face normals & centroids
+   ============================================================ */
+function sub(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];}
+function cross(a,b){return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];}
+function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+function norm(a){const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l];}
+faces.forEach(f=>{
+  const n = norm(cross(sub(f.v[1],f.v[0]), sub(f.v[2],f.v[0])));
+  f.n = n;
+  const c=[0,0,0]; f.v.forEach(p=>{c[0]+=p[0];c[1]+=p[1];c[2]+=p[2];});
+  f.ctr=[c[0]/f.v.length,c[1]/f.v.length,c[2]/f.v.length];
+});
+
+/* ============================================================
+   CAMERA + PROJECTION
+   ============================================================ */
+let cam={yaw:0.86, pitch:0.40, dist:76};
+const DEFAULT={yaw:0.86, pitch:0.40, dist:76};
+const LIGHT = norm([-0.55,-1.0,-0.42]);   // sun direction (points down-ish)
+
+let tgtY=13; // eased vertical look-at (recenters on an isolated floor)
+function wantTargetY(){ return state.view==='all' ? 13 : (parseInt(state.view)-1)*FH + 5.5; }
+function getTarget(){ return [20, tgtY, 10]; }
+
+function camBasis(){
+  const T=getTarget();
+  const cp=Math.cos(cam.pitch), sp=Math.sin(cam.pitch);
+  const cy=Math.cos(cam.yaw), sy=Math.sin(cam.yaw);
+  const pos=[T[0]+cam.dist*cp*sy, T[1]+cam.dist*sp, T[2]+cam.dist*cp*cy];
+  const fwd=norm(sub(T,pos));
+  const right=norm(cross(fwd,[0,1,0]));
+  const up=cross(right,fwd);
+  return {pos,fwd,right,up};
+}
+let B=camBasis();
+function project(p){
+  const rel=sub(p,B.pos);
+  const cz=dot(rel,B.fwd);
+  const cx=dot(rel,B.right);
+  const cy=dot(rel,B.up);
+  const f=H*0.9;
+  return {x:W/2 + f*cx/cz, y:H/2 - f*cy/cz, z:cz, ok:cz>0.4};
+}
+
+/* ============================================================
+   VIEW STATE
+   ============================================================ */
+let state={ view:'all', explode:0, roof:true, spin:false };
+function grpVisible(g){
+  if(g==='lot') return state.view==='all';
+  if(state.view==='all'){
+    if(g==='roof') return state.roof;
+    // interiors appear as you explode; lifting the roof also opens the top unit
+    if(g[0]==='i') return state.explode>0.04 || (g==='i3' && !state.roof);
+    return true;
+  }
+  // isolate a level N
+  const n=state.view;
+  if(g==='f'+n || g==='i'+n) return true;
+  return false;
+}
+function grpYOffset(g){
+  const e=state.explode; if(e<=0) return 0;
+  const gap=e*13;
+  const idx={f1:0,i1:0, f2:1,i2:1, f3:2,i3:2, roof:3, lot:0};
+  return (idx[g]||0)*gap;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function shade(f, flip){
+  let d = dot(f.n, [-LIGHT[0],-LIGHT[1],-LIGHT[2]]);
+  if(flip) d=-d;
+  const b = 0.42 + 0.62*Math.max(0,d);
+  return b;
+}
+function rgb(c,b,a){
+  return 'rgba('+Math.min(255,c[0]*b|0)+','+Math.min(255,c[1]*b|0)+','+Math.min(255,c[2]*b|0)+','+(a==null?1:a)+')';
+}
+
+function render(){
+  B=camBasis();
+  // sky gradient background from CSS vars
+  const cs=getComputedStyle(document.documentElement);
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0, cs.getPropertyValue('--sky-top').trim()||'#dbe6ec');
+  g.addColorStop(1, cs.getPropertyValue('--sky-bot').trim()||'#eef1f2');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // build draw list
+  const list=[];
+  for(const f of faces){
+    if(!grpVisible(f.grp)) continue;
+    const isFloor = f.grp[0]==='f';
+    const opened = isFloor && grpVisible('i'+f.grp[1]); // this floor is cut open
+    // cut-open floors: drop the ceiling and the glazing on the removed walls
+    if(opened && (f.kind==='ceiling' || f.kind==='window')) continue;
+    const dy=grpYOffset(f.grp);
+    const vs=f.v.map(p=>[p[0],p[1]+dy,p[2]]);
+    const ctr=[f.ctr[0],f.ctr[1]+dy,f.ctr[2]];
+    const viewDir=sub(ctr,B.pos);
+    const d=dot(f.n,viewDir);
+    let flip=false;
+    // dollhouse: for an opened floor's siding, cull the walls FACING the camera
+    const dollhouse = opened && f.kind==='siding';
+    if(f.cull){
+      if(dollhouse){ if(d<0) continue; }
+      else if(d>0) continue;
+    }else{
+      if(d>0) flip=true; // double-sided: light from correct side
+    }
+    const proj=vs.map(project);
+    if(proj.some(p=>!p.ok)) continue;
+    const depth=dot(sub(ctr,B.pos),B.fwd);
+    list.push({f,proj,depth,flip});
+  }
+  list.sort((a,b)=>b.depth-a.depth);
+
+  for(const it of list){
+    const {f,proj,flip}=it;
+    ctx.beginPath();
+    ctx.moveTo(proj[0].x,proj[0].y);
+    for(let i=1;i<proj.length;i++) ctx.lineTo(proj[i].x,proj[i].y);
+    ctx.closePath();
+
+    if(f.kind==='window'){
+      // glass with vertical gradient + reflection
+      const ys=proj.map(p=>p.y);
+      const gg=ctx.createLinearGradient(0,Math.min(...ys),0,Math.max(...ys));
+      gg.addColorStop(0, rgb(MAT.glass,1.05));
+      gg.addColorStop(1, rgb(MAT.glassLo,0.95));
+      ctx.fillStyle=gg; ctx.fill();
+      ctx.lineWidth=Math.max(1.4, H*0.0022); ctx.strokeStyle=rgb(MAT.frame,1); ctx.stroke();
+      // mullion
+      ctx.lineWidth=Math.max(0.8,H*0.0012);
+      const mx1={x:(proj[0].x+proj[3].x)/2,y:(proj[0].y+proj[3].y)/2};
+      const mx2={x:(proj[1].x+proj[2].x)/2,y:(proj[1].y+proj[2].y)/2};
+      ctx.beginPath(); ctx.moveTo(mx1.x,mx1.y); ctx.lineTo(mx2.x,mx2.y); ctx.stroke();
+      continue;
+    }
+
+    const b=shade(f,flip);
+    ctx.fillStyle=rgb(f.c,b,f.alpha);
+    ctx.fill();
+
+    // subtle edge for solids to read as an architectural model
+    if(f.kind!=='grass2'){
+      ctx.lineWidth=Math.max(0.5,H*0.0007);
+      ctx.strokeStyle='rgba(20,24,30,'+(f.grp==='lot'?0.05:0.14)+')';
+      ctx.stroke();
+    }
+
+    // siding battens on charcoal walls
+    if(f.kind==='siding' && Math.abs(f.n[1])<0.3){
+      ctx.save(); ctx.clip();
+      ctx.lineWidth=Math.max(0.5,H*0.0006);
+      ctx.strokeStyle='rgba(20,24,30,0.10)';
+      const N=10;
+      for(let i=1;i<N;i++){
+        const t=i/N;
+        const a={x:proj[0].x+(proj[1].x-proj[0].x)*t, y:proj[0].y+(proj[1].y-proj[0].y)*t};
+        const c={x:proj[3].x+(proj[2].x-proj[3].x)*t, y:proj[3].y+(proj[2].y-proj[3].y)*t};
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(c.x,c.y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+
+  // labels — room names when a single level is isolated; level tags while exploding
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  if(state.view!=='all'){
+    drawLabels(LABELS.filter(L=>grpVisible(L.g)), Math.max(10,H*0.019), 0.78);
+  } else if(state.explode>0.18){
+    drawLabels(LEVELTAGS, Math.max(11,H*0.021), 0.86);
+  }
+}
+function drawLabels(list, fs, alpha){
+  ctx.font='700 '+fs+'px '+getComputedStyle(document.body).fontFamily;
+  for(const L of list){
+    const dy=grpYOffset(L.g);
+    const p=project([L.p[0],L.p[1]+dy,L.p[2]]);
+    if(!p.ok) continue;
+    const w=ctx.measureText(L.t).width+14, h=fs*1.75;
+    ctx.fillStyle='rgba(15,19,25,'+alpha+')';
+    roundRect(p.x-w/2,p.y-h/2,w,h,5); ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.96)';
+    ctx.fillText(L.t,p.x,p.y+0.5);
+  }
+}
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* ============================================================
+   ANIMATION LOOP (renders only when needed)
+   ============================================================ */
+let dirty=true, targetExplode=0;
+function requestRender(){ dirty=true; }
+function loop(){
+  // ease explode toward target
+  if(Math.abs(state.explode-targetExplode)>0.001){
+    state.explode += (targetExplode-state.explode)*0.16; dirty=true;
+  } else state.explode=targetExplode;
+  if(state.spin){ cam.yaw+=0.0038; dirty=true; }
+  const wy=wantTargetY();
+  if(Math.abs(tgtY-wy)>0.01){ tgtY+=(wy-tgtY)*0.16; dirty=true; } else tgtY=wy;
+  if(dirty){ render(); dirty=false; }
+  requestAnimationFrame(loop);
+}
+
+/* ============================================================
+   INTERACTION
+   ============================================================ */
+function resize(){
+  DPR=Math.min(2,window.devicePixelRatio||1);
+  W=cv.clientWidth; H=cv.clientHeight;
+  cv.width=W*DPR; cv.height=H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  requestRender();
+}
+window.addEventListener('resize',resize);
+
+let drag=false,lx=0,ly=0;
+cv.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId);fadeHint();});
+cv.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  cam.yaw += (e.clientX-lx)*0.008;
+  cam.pitch += (e.clientY-ly)*0.006;
+  cam.pitch=Math.max(-0.15,Math.min(1.35,cam.pitch));
+  lx=e.clientX;ly=e.clientY; requestRender();
+});
+cv.addEventListener('pointerup',()=>drag=false);
+cv.addEventListener('pointercancel',()=>drag=false);
+cv.addEventListener('wheel',e=>{
+  e.preventDefault();
+  cam.dist*=Math.exp(e.deltaY*0.0011);
+  cam.dist=Math.max(34,Math.min(160,cam.dist)); requestRender();
+},{passive:false});
+
+// pinch
+let pdist=0;
+cv.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){
+    const dx=e.touches[0].clientX-e.touches[1].clientX;
+    const dy=e.touches[0].clientY-e.touches[1].clientY;
+    const d=Math.hypot(dx,dy);
+    if(pdist) { cam.dist*=pdist/d; cam.dist=Math.max(34,Math.min(160,cam.dist)); requestRender(); }
+    pdist=d; e.preventDefault();
+  }
+},{passive:false});
+cv.addEventListener('touchend',()=>pdist=0);
+
+// dock: view buttons
+document.querySelectorAll('[data-view]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-view]').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    state.view=btn.dataset.view;
+    if(state.view!=='all'){ // isolating a floor resets the stack
+      document.getElementById('explode').value=0; targetExplode=0;
+    }
+    requestRender();
+  });
+});
+// explode slider
+const exSlider=document.getElementById('explode');
+exSlider.addEventListener('input',()=>{
+  targetExplode=exSlider.value/100;
+  if(targetExplode>0.02 && state.view!=='all'){
+    // re-enter whole-building when user explodes
+    document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view==='all'));
+    state.view='all';
+  }
+  requestRender();
+});
+// roof
+const roofBtn=document.getElementById('roofBtn');
+roofBtn.addEventListener('click',()=>{
+  state.roof=!state.roof; roofBtn.classList.toggle('on',state.roof);
+  roofBtn.setAttribute('aria-pressed',state.roof); requestRender();
+});
+// spin
+const spinBtn=document.getElementById('spinBtn');
+spinBtn.addEventListener('click',()=>{
+  state.spin=!state.spin; spinBtn.classList.toggle('on',state.spin);
+  spinBtn.setAttribute('aria-pressed',state.spin); requestRender();
+});
+// reset
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  cam={...DEFAULT}; state.spin=false; spinBtn.classList.remove('on');
+  requestRender();
+});
+
+// theme toggle
+const themeBtn=document.getElementById('themeBtn');
+function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); requestRender(); }
+themeBtn.addEventListener('click',()=>{
+  const cur=document.documentElement.getAttribute('data-theme')
+    || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  applyTheme(cur==='dark'?'light':'dark');
+});
+themeBtn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();themeBtn.click();} });
+
+let hintFaded=false;
+function fadeHint(){ if(hintFaded)return; hintFaded=true;
+  const h=document.getElementById('hint'); if(h){h.style.opacity='0';} }
+setTimeout(fadeHint, 9000);
+
+// respect reduced motion
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){ /* spin stays opt-in */ }
+
+resize();
+loop();
+})();
+</script>
