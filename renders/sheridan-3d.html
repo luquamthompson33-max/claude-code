@@ -417,12 +417,31 @@ const LEVELTAGS = [
    SITE  (long 34 x 130 parcel, building near the alley end)
    ============================================================ */
 // grass lot — building sits with its east (garage) wall toward the alley/driveway
-slab(-58,-7, 108,34, -0.2, MAT.grass, {grp:'lot', cull:false});
-slab(-58,-7, 108,34, -0.19, MAT.grassLo, {grp:'lot', cull:false, kind:'grass2'});
+slab(-58,-7, 108,34, -0.2, MAT.grass, {grp:'lot', cull:false, kind:'ground'});
 // driveway apron in front of garages (east)
-slab(40,-1, 12,22, -0.16, MAT.drive, {grp:'lot', cull:false});
+slab(40,-1, 12,22, -0.16, MAT.drive, {grp:'lot', cull:false, kind:'ground'});
 // concrete pad under building
-slab(-0.6,-0.6, 41.2,21.2, -0.1, MAT.walk, {grp:'lot', cull:false});
+slab(-0.6,-0.6, 41.2,21.2, -0.1, MAT.walk, {grp:'lot', cull:false, kind:'ground'});
+
+/* ---------- context props (scale + life) ---------- */
+// a parked car tucked in the north garage bay (seen when L1 is opened)
+(function car(x,z,body,cab){
+  box(x,0.15,z, 13,3.0,6, body, {grp:'i1',...INT});                 // body
+  box(x+3,3.1,z+0.7, 6.5,2.3,4.6, cab, {grp:'i1',...INT});          // cabin
+  [[x+2,z-0.15],[x+2,z+6.05],[x+9.4,z-0.15],[x+9.4,z+6.05]].forEach(([wx,wz])=>
+    box(wx,-0.05,wz-0.35, 1.6,1.5,0.7, [26,26,30], {grp:'i1',...INT}));  // wheels
+})(24.5, 1.6, [46,64,96], [70,92,132]);
+// low-poly street tree on the front lawn
+(function tree(x,z){
+  box(x-0.45,-0.2,z-0.45, 0.9,4.2,0.9, [96,70,46], {grp:'lot',...INT});     // trunk
+  box(x-3.0,3.8,z-3.0, 6.0,3.6,6.0, [84,118,72], {grp:'lot',...INT});        // canopy lower
+  box(x-2.1,7.0,z-2.1, 4.2,3.0,4.2, [102,138,88], {grp:'lot',...INT});       // canopy upper
+})(-6, 24);
+// 5'-10" scale figure on the driveway
+(function person(x,z){
+  box(x-0.5,0,z-0.4, 1.0,3.9,0.8, [72,84,102], {grp:'lot',...INT});          // body
+  box(x-0.42,3.9,z-0.34, 0.84,1.0,0.68, [198,170,150], {grp:'lot',...INT});  // head
+})(45, 13);
 
 /* ============================================================
    PRECOMPUTE face normals & centroids
@@ -431,6 +450,14 @@ function sub(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];}
 function cross(a,b){return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];}
 function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
 function norm(a){const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l];}
+function convexHull(pts){ // 2D monotone chain on [x,z] points
+  const p=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
+  const lo=[],up=[];
+  for(const q of p){ while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],q)<=0)lo.pop(); lo.push(q); }
+  for(let i=p.length-1;i>=0;i--){ const q=p[i]; while(up.length>=2&&cr(up[up.length-2],up[up.length-1],q)<=0)up.pop(); up.push(q); }
+  lo.pop(); up.pop(); return lo.concat(up);
+}
 faces.forEach(f=>{
   const n = norm(cross(sub(f.v[1],f.v[0]), sub(f.v[2],f.v[0])));
   f.n = n;
@@ -515,8 +542,8 @@ function render(){
   g.addColorStop(1, cs.getPropertyValue('--sky-bot').trim()||'#eef1f2');
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
 
-  // build draw list
-  const list=[];
+  // build draw list, split so the cast shadow can sit between ground and objects
+  const ground=[], main=[];
   for(const f of faces){
     if(!grpVisible(f.grp)) continue;
     const isFloor = f.grp[0]==='f';
@@ -540,11 +567,16 @@ function render(){
     const proj=vs.map(project);
     if(proj.some(p=>!p.ok)) continue;
     const depth=dot(sub(ctr,B.pos),B.fwd);
-    list.push({f,proj,depth,flip});
+    (f.kind==='ground'?ground:main).push({f,proj,depth,flip});
   }
-  list.sort((a,b)=>b.depth-a.depth);
+  ground.sort((a,b)=>b.depth-a.depth);
+  main.sort((a,b)=>b.depth-a.depth);
 
-  for(const it of list){
+  ground.forEach(paint);
+  if(state.view==='all' && state.explode<0.05) drawCastShadow();
+  main.forEach(paint);
+
+  function paint(it){
     const {f,proj,flip}=it;
     ctx.beginPath();
     ctx.moveTo(proj[0].x,proj[0].y);
@@ -552,33 +584,30 @@ function render(){
     ctx.closePath();
 
     if(f.kind==='window'){
-      // glass with vertical gradient + reflection
       const ys=proj.map(p=>p.y);
       const gg=ctx.createLinearGradient(0,Math.min(...ys),0,Math.max(...ys));
       gg.addColorStop(0, rgb(MAT.glass,1.05));
       gg.addColorStop(1, rgb(MAT.glassLo,0.95));
       ctx.fillStyle=gg; ctx.fill();
       ctx.lineWidth=Math.max(1.4, H*0.0022); ctx.strokeStyle=rgb(MAT.frame,1); ctx.stroke();
-      // mullion
       ctx.lineWidth=Math.max(0.8,H*0.0012);
       const mx1={x:(proj[0].x+proj[3].x)/2,y:(proj[0].y+proj[3].y)/2};
       const mx2={x:(proj[1].x+proj[2].x)/2,y:(proj[1].y+proj[2].y)/2};
       ctx.beginPath(); ctx.moveTo(mx1.x,mx1.y); ctx.lineTo(mx2.x,mx2.y); ctx.stroke();
-      continue;
+      return;
     }
 
     const b=shade(f,flip);
     ctx.fillStyle=rgb(f.c,b,f.alpha);
     ctx.fill();
 
-    // subtle edge for solids to read as an architectural model
-    if(f.kind!=='grass2'){
+    if(f.kind!=='ground'){
       ctx.lineWidth=Math.max(0.5,H*0.0007);
-      ctx.strokeStyle='rgba(20,24,30,'+(f.grp==='lot'?0.05:0.14)+')';
+      ctx.strokeStyle='rgba(20,24,30,'+(f.grp==='lot'?0.06:0.14)+')';
       ctx.stroke();
     }
 
-    // siding battens on charcoal walls
+    // siding battens on the walls
     if(f.kind==='siding' && Math.abs(f.n[1])<0.3){
       ctx.save(); ctx.clip();
       ctx.lineWidth=Math.max(0.5,H*0.0006);
@@ -592,6 +621,22 @@ function render(){
       }
       ctx.restore();
     }
+  }
+
+  // ---- cast shadow: project the building's 8 corners onto the ground ----
+  function drawCastShadow(){
+    const t=-30/LIGHT[1]; // slide a roof-height point down the sun ray to y=0
+    const pts=[[0,0],[40,0],[40,20],[0,20]]; // base footprint
+    [[0,0],[40,0],[40,20],[0,20]].forEach(([x,z])=>pts.push([x+t*LIGHT[0], z+t*LIGHT[2]]));
+    const hull=convexHull(pts).map(([x,z])=>project([x,0.03,z]));
+    if(hull.some(p=>!p.ok)) return;
+    ctx.save();
+    ctx.filter='blur('+Math.max(3,H*0.007)+'px)';
+    ctx.beginPath(); ctx.moveTo(hull[0].x,hull[0].y);
+    for(let i=1;i<hull.length;i++) ctx.lineTo(hull[i].x,hull[i].y);
+    ctx.closePath();
+    ctx.fillStyle='rgba(24,30,26,0.30)'; ctx.fill();
+    ctx.restore();
   }
 
   // labels — room names when a single level is isolated; level tags while exploding
