@@ -5,35 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quam Art &amp; Design — Graphic Artist, Illustrator &amp; Painter</title>
   <meta name="description" content="Quam Art and Design is an independent studio by a graphic artist, illustrator and painter — brand identities, logos, editorial illustration, websites and clothing design made with intent." />
-  <meta name="theme-color" content="#17130f" />
+  <meta name="theme-color" content="#0b1b2c" />
 
   <!-- Google Fonts is the only external resource -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      /* Restrained warm palette: cream + charcoal + one vermillion accent */
-      --bg:        #17130f;
-      --bg-2:      #1f1913;
-      --paper:     #f5efe4;
-      --ink:       #f5efe4;
-      --ink-soft:  #b7ab98;
-      --ink-mute:  #8a8072;
-      --line:      rgba(245, 239, 228, 0.12);
-      --line-2:    rgba(245, 239, 228, 0.18);
-      --accent:    #ff5a2c;
-      --accent-2:  #ffae3b;
+      /* Brand colorway pulled from the logo: teal + deep navy + cool white */
+      --bg:        #0b1b2c;
+      --bg-2:      #102a3f;
+      --paper:     #eef5f4;
+      --ink:       #eef5f4;
+      --ink-soft:  #a0b7b9;
+      --ink-mute:  #6f8a8c;
+      --line:      rgba(238, 245, 244, 0.10);
+      --line-2:    rgba(238, 245, 244, 0.17);
+      --teal:      #14988c;   /* logo teal */
+      --accent:    #16b0a1;   /* interactive teal */
+      --accent-2:  #24d6c4;   /* bright teal for glow / hover */
+      --on-accent: #05141f;   /* ink on teal buttons */
 
       /* Spacing scale (8pt) */
-      --s-1: 0.5rem;   /*  8 */
-      --s-2: 1rem;     /* 16 */
-      --s-3: 1.5rem;   /* 24 */
-      --s-4: 2.5rem;   /* 40 */
-      --s-5: 4rem;     /* 64 */
-      --s-6: 6rem;     /* 96 */
-      --s-7: 9rem;     /* 144 */
+      --s-1: 0.5rem;  --s-2: 1rem;   --s-3: 1.5rem;  --s-4: 2.5rem;
+      --s-5: 4rem;    --s-6: 6rem;   --s-7: 9rem;
 
       --max: 1160px;
       --radius: 20px;
@@ -41,7 +38,6 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -54,52 +50,31 @@
       text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
-
     a { color: inherit; text-decoration: none; }
     img, svg { display: block; max-width: 100%; }
+    ::selection { background: var(--accent); color: var(--on-accent); }
 
-    ::selection { background: var(--accent); color: #17130f; }
-
-    .wrap {
-      width: 100%;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--s-3);
-    }
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--s-3); }
 
     .eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: var(--s-1);
+      font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent-2); font-weight: 600;
+      display: inline-flex; align-items: center; gap: var(--s-1);
     }
-    .eyebrow::before {
-      content: "";
-      width: 26px; height: 1px;
-      background: var(--accent);
-      display: inline-block;
-    }
+    .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent-2); display: inline-block; }
 
-    /* Display type */
     h1, h2, h3 {
       font-family: "Fraunces", Georgia, "Times New Roman", serif;
-      font-weight: 500;
-      line-height: 1.02;
-      letter-spacing: -0.01em;
+      font-weight: 500; line-height: 1.02; letter-spacing: -0.01em;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Nav                                                                */
-    /* ------------------------------------------------------------------ */
+    /* ---------- Badge (inline SVG logo) ---------- */
+    .badge { display: block; }
+
+    /* ---------- Nav ---------- */
     header.nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(23, 19, 15, 0.72);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11, 27, 44, 0.72);
       -webkit-backdrop-filter: blur(14px) saturate(150%);
       backdrop-filter: blur(14px) saturate(150%);
       border-bottom: 1px solid transparent;
@@ -108,270 +83,103 @@
     header.nav.scrolled { border-bottom-color: var(--line); }
 
     .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--s-3);
-      height: 72px;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--s-3);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--s-3); height: 74px; max-width: var(--max); margin: 0 auto; padding: 0 var(--s-3);
     }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: "Fraunces", serif;
-      font-size: 1.28rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
+    .brand { display: inline-flex; align-items: center; gap: 0.65rem; white-space: nowrap; }
+    .brand .badge { width: 42px; height: 42px; flex: none; }
+    .brand .name {
+      font-family: "Fraunces", serif; font-size: 1.24rem; font-weight: 600; letter-spacing: -0.01em;
     }
-    .brand .mark {
-      width: 30px; height: 30px;
-      flex: none;
-      color: var(--accent);
-    }
-    /* Hide the long part of the brand on small screens so the pinned
-       'Get in touch' button always stays fully visible. */
+    /* Collapse to just "Quam" on small screens so the pinned button always fits */
     .brand-rest { display: none; }
-    @media (min-width: 430px) { .brand-rest { display: inline; } }
+    @media (min-width: 460px) { .brand-rest { display: inline; } }
 
-    .nav-links {
-      display: none;
-      align-items: center;
-      gap: var(--s-4);
-      margin-left: auto;
-    }
-    .nav-links a {
-      font-size: 0.94rem;
-      color: var(--ink-soft);
-      font-weight: 500;
-      position: relative;
-      transition: color 0.2s var(--ease);
-    }
+    .nav-links { display: none; align-items: center; gap: var(--s-4); margin-left: auto; }
+    .nav-links a { font-size: 0.94rem; color: var(--ink-soft); font-weight: 500; position: relative; transition: color 0.2s var(--ease); }
     .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0; bottom: -6px;
-      width: 100%; height: 1.5px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.28s var(--ease);
+      content: ""; position: absolute; left: 0; bottom: -6px; width: 100%; height: 1.5px;
+      background: var(--accent-2); transform: scaleX(0); transform-origin: left; transition: transform 0.28s var(--ease);
     }
     .nav-links a:hover { color: var(--ink); }
     .nav-links a:hover::after { transform: scaleX(1); }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      font-size: 0.94rem;
-      line-height: 1;
-      padding: 0.72rem 1.15rem;
-      border-radius: 999px;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+      display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.94rem;
+      line-height: 1; padding: 0.72rem 1.15rem; border-radius: 999px; white-space: nowrap; cursor: pointer;
+      transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
     }
-    .btn-primary {
-      background: var(--accent);
-      color: #17130f;
-      box-shadow: 0 6px 20px -8px rgba(255, 90, 44, 0.7);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 26px -8px rgba(255, 90, 44, 0.75);
-    }
+    .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 6px 22px -8px rgba(36, 214, 196, 0.55); }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--accent-2); box-shadow: 0 12px 28px -8px rgba(36, 214, 196, 0.6); }
     .btn-primary svg { transition: transform 0.25s var(--ease); }
     .btn-primary:hover svg { transform: translate(2px, -2px); }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--ink);
-      border: 1px solid var(--line-2);
-      padding: 0.9rem 1.4rem;
-    }
-    .btn-ghost:hover {
-      transform: translateY(-2px);
-      border-color: var(--ink-soft);
-      background: rgba(245, 239, 228, 0.04);
-    }
-
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-2); padding: 0.9rem 1.4rem; }
+    .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); background: rgba(22, 176, 161, 0.08); }
     .nav .btn-primary { margin-left: var(--s-3); }
 
-    /* ------------------------------------------------------------------ */
-    /* Hero — flowing mesh gradient with drifting blurred shapes          */
-    /* ------------------------------------------------------------------ */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      background: var(--bg);
-    }
-
-    .mesh {
-      position: absolute;
-      inset: -20% -10%;
-      z-index: 0;
-      filter: blur(8px);
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.85;
-      will-change: transform;
-    }
+    /* ---------- Hero ---------- */
+    .hero { position: relative; overflow: hidden; isolation: isolate; background: var(--bg); }
+    .mesh { position: absolute; inset: -20% -10%; z-index: 0; filter: blur(8px); }
+    .blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.8; will-change: transform; }
     .blob.b1 {
-      width: 46vw; height: 46vw;
-      max-width: 620px; max-height: 620px;
-      top: -8%; left: -6%;
-      background: radial-gradient(circle at 30% 30%, #ff5a2c, rgba(255, 90, 44, 0) 68%);
+      width: 46vw; height: 46vw; max-width: 620px; max-height: 620px; top: -8%; left: -6%;
+      background: radial-gradient(circle at 30% 30%, #16b0a1, rgba(22,176,161,0) 68%);
       animation: drift1 22s var(--ease) infinite alternate;
     }
     .blob.b2 {
-      width: 42vw; height: 42vw;
-      max-width: 560px; max-height: 560px;
-      top: 4%; right: -8%;
-      background: radial-gradient(circle at 60% 40%, #ffae3b, rgba(255, 174, 59, 0) 66%);
+      width: 42vw; height: 42vw; max-width: 560px; max-height: 560px; top: 2%; right: -8%;
+      background: radial-gradient(circle at 60% 40%, #24d6c4, rgba(36,214,196,0) 66%);
       animation: drift2 26s var(--ease) infinite alternate;
     }
     .blob.b3 {
-      width: 50vw; height: 50vw;
-      max-width: 680px; max-height: 680px;
-      bottom: -22%; left: 18%;
-      background: radial-gradient(circle at 40% 60%, #9c2a52, rgba(156, 42, 82, 0) 70%);
+      width: 50vw; height: 50vw; max-width: 680px; max-height: 680px; bottom: -22%; left: 16%;
+      background: radial-gradient(circle at 40% 60%, #0d6b62, rgba(13,107,98,0) 70%);
       animation: drift3 30s var(--ease) infinite alternate;
     }
     .blob.b4 {
-      width: 34vw; height: 34vw;
-      max-width: 440px; max-height: 440px;
-      bottom: -10%; right: 6%;
-      background: radial-gradient(circle at 50% 50%, #6a3d1f, rgba(106, 61, 31, 0) 68%);
+      width: 36vw; height: 36vw; max-width: 460px; max-height: 460px; bottom: -12%; right: 4%;
+      background: radial-gradient(circle at 50% 50%, #10456b, rgba(16,69,107,0) 68%);
       animation: drift4 24s var(--ease) infinite alternate;
     }
-    /* grain-free vignette to seat the mesh */
     .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: radial-gradient(120% 90% at 50% 0%, rgba(23,19,15,0) 30%, rgba(23,19,15,0.55) 100%);
-      pointer-events: none;
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(120% 90% at 50% 0%, rgba(11,27,44,0) 30%, rgba(11,27,44,0.55) 100%);
     }
-
-    @keyframes drift1 {
-      from { transform: translate3d(0,0,0) scale(1); }
-      to   { transform: translate3d(6%, 8%, 0) scale(1.12); }
-    }
-    @keyframes drift2 {
-      from { transform: translate3d(0,0,0) scale(1.05); }
-      to   { transform: translate3d(-7%, 5%, 0) scale(0.95); }
-    }
-    @keyframes drift3 {
-      from { transform: translate3d(0,0,0) scale(1); }
-      to   { transform: translate3d(5%, -6%, 0) scale(1.1); }
-    }
-    @keyframes drift4 {
-      from { transform: translate3d(0,0,0) scale(0.98); }
-      to   { transform: translate3d(-6%, -7%, 0) scale(1.08); }
-    }
+    @keyframes drift1 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(6%, 8%, 0) scale(1.12); } }
+    @keyframes drift2 { from { transform: translate3d(0,0,0) scale(1.05); } to { transform: translate3d(-7%, 5%, 0) scale(0.95); } }
+    @keyframes drift3 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(5%, -6%, 0) scale(1.1); } }
+    @keyframes drift4 { from { transform: translate3d(0,0,0) scale(0.98); } to { transform: translate3d(-6%, -7%, 0) scale(1.08); } }
 
     .hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: clamp(4.5rem, 12vh, 8rem) var(--s-3) clamp(4rem, 10vh, 7rem);
+      position: relative; z-index: 2; max-width: var(--max); margin: 0 auto;
+      padding: clamp(3.5rem, 10vh, 7rem) var(--s-3) clamp(4rem, 10vh, 7rem);
     }
-
-    /* frosted-glass card */
     .hero-card {
-      max-width: 760px;
-      padding: clamp(1.75rem, 5vw, 3.25rem);
-      border-radius: var(--radius);
-      background: rgba(23, 19, 15, 0.38);
-      border: 1px solid var(--line-2);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
-      backdrop-filter: blur(20px) saturate(140%);
-      box-shadow: 0 30px 80px -40px rgba(0,0,0,0.8);
+      max-width: 780px; padding: clamp(1.75rem, 5vw, 3.25rem); border-radius: var(--radius);
+      background: rgba(11, 27, 44, 0.4); border: 1px solid var(--line-2);
+      -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%);
+      box-shadow: 0 30px 80px -40px rgba(0,0,0,0.85);
     }
-
-    .hero h1 {
-      font-size: clamp(2.75rem, 8vw, 5.4rem);
-      margin: var(--s-3) 0 var(--s-3);
-      max-width: 12ch;
-    }
-    .hero h1 em {
-      font-style: italic;
-      font-weight: 500;
-      color: var(--accent);
-    }
-    .hero p.lead {
-      font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-      color: var(--ink-soft);
-      max-width: 52ch;
-      margin-bottom: var(--s-4);
-    }
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--s-2);
-    }
-
-    .disciplines {
-      margin-top: var(--s-4);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem 0.6rem;
-    }
+    .hero-card .badge { width: 84px; height: 84px; margin-bottom: var(--s-3); }
+    .hero h1 { font-size: clamp(2.75rem, 8vw, 5.4rem); margin: var(--s-2) 0 var(--s-3); max-width: 12ch; }
+    .hero h1 em { font-style: italic; font-weight: 500; color: var(--accent-2); }
+    .hero p.lead { font-size: clamp(1.05rem, 2.4vw, 1.3rem); color: var(--ink-soft); max-width: 52ch; margin-bottom: var(--s-4); }
+    .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+    .disciplines { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 0.6rem; }
     .disciplines span {
-      font-size: 0.82rem;
-      letter-spacing: 0.02em;
-      color: var(--ink-soft);
-      padding: 0.4rem 0.85rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(245, 239, 228, 0.03);
+      font-size: 0.82rem; letter-spacing: 0.02em; color: var(--ink-soft); padding: 0.4rem 0.85rem;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(238, 245, 244, 0.03);
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Section scaffolding                                                */
-    /* ------------------------------------------------------------------ */
+    /* ---------- Sections ---------- */
     section { position: relative; }
     .section-pad { padding: clamp(4.5rem, 12vh, var(--s-7)) 0; }
+    .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--s-3); margin-bottom: var(--s-5); }
+    .section-head h2 { font-size: clamp(2rem, 5vw, 3.1rem); margin-top: var(--s-2); max-width: 16ch; }
+    .section-head p { color: var(--ink-soft); max-width: 34ch; }
 
-    .section-head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      justify-content: space-between;
-      gap: var(--s-3);
-      margin-bottom: var(--s-5);
-    }
-    .section-head h2 {
-      font-size: clamp(2rem, 5vw, 3.1rem);
-      margin-top: var(--s-2);
-      max-width: 16ch;
-    }
-    .section-head p {
-      color: var(--ink-soft);
-      max-width: 34ch;
-    }
-
-    /* ------------------------------------------------------------------ */
-    /* Work grid                                                          */
-    /* ------------------------------------------------------------------ */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--s-3);
-    }
+    /* ---------- Work grid ---------- */
+    .grid { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
     @media (min-width: 720px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
       .grid .card:first-child { grid-column: 1 / -1; }
@@ -380,180 +188,68 @@
       .grid { grid-template-columns: repeat(3, 1fr); }
       .grid .card:first-child { grid-column: auto; }
     }
-
     .card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg-2);
+      border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-2);
       transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: var(--line-2);
-      box-shadow: 0 24px 50px -30px rgba(0,0,0,0.9);
-    }
-    .card .thumb {
-      aspect-ratio: 4 / 3;
-      width: 100%;
-      overflow: hidden;
-    }
+    .card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 24px 50px -30px rgba(0,0,0,0.9); }
+    .card .thumb { aspect-ratio: 4 / 3; width: 100%; overflow: hidden; }
     .card .thumb svg { width: 100%; height: 100%; }
     .card .body { padding: var(--s-3); }
-    .card .kicker {
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      font-weight: 600;
-    }
-    .card h3 {
-      font-size: 1.5rem;
-      margin: 0.5rem 0 0.55rem;
-    }
+    .card .kicker { font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-2); font-weight: 600; }
+    .card h3 { font-size: 1.5rem; margin: 0.5rem 0 0.55rem; }
     .card p { color: var(--ink-soft); font-size: 0.96rem; }
     .card .meta {
-      margin-top: var(--s-3);
-      padding-top: var(--s-2);
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.84rem;
-      color: var(--ink-mute);
+      margin-top: var(--s-3); padding-top: var(--s-2); border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; font-size: 0.84rem; color: var(--ink-mute);
     }
-    .card .meta .arrow {
-      color: var(--accent);
-      transition: transform 0.3s var(--ease);
-    }
+    .card .meta .arrow { color: var(--accent-2); transition: transform 0.3s var(--ease); }
     .card:hover .meta .arrow { transform: translate(4px, -4px); }
 
-    /* ------------------------------------------------------------------ */
-    /* About                                                              */
-    /* ------------------------------------------------------------------ */
-    .about {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--s-5);
-      align-items: center;
-    }
-    @media (min-width: 900px) {
-      .about { grid-template-columns: 1.15fr 0.85fr; gap: var(--s-6); }
-    }
-    .about h2 {
-      font-size: clamp(1.9rem, 4.5vw, 2.9rem);
-      margin-bottom: var(--s-3);
-      max-width: 18ch;
-    }
+    /* ---------- About ---------- */
+    .about { display: grid; grid-template-columns: 1fr; gap: var(--s-5); align-items: center; }
+    @media (min-width: 900px) { .about { grid-template-columns: 1.15fr 0.85fr; gap: var(--s-6); } }
+    .about h2 { font-size: clamp(1.9rem, 4.5vw, 2.9rem); margin-bottom: var(--s-3); max-width: 18ch; }
     .about p { color: var(--ink-soft); margin-bottom: var(--s-2); }
     .about p strong { color: var(--ink); font-weight: 600; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-3); }
+    .stat { border: 1px solid var(--line); border-radius: 16px; padding: var(--s-3); background: var(--bg-2); }
+    .stat .n { font-family: "Fraunces", serif; font-size: 2.4rem; font-weight: 500; color: var(--accent-2); line-height: 1; }
+    .stat .l { margin-top: 0.5rem; font-size: 0.86rem; color: var(--ink-soft); }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--s-3);
-    }
-    .stat {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: var(--s-3);
-      background: var(--bg-2);
-    }
-    .stat .n {
-      font-family: "Fraunces", serif;
-      font-size: 2.4rem;
-      font-weight: 500;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat .l {
-      margin-top: 0.5rem;
-      font-size: 0.86rem;
-      color: var(--ink-soft);
-    }
-
-    /* ------------------------------------------------------------------ */
-    /* Contact                                                            */
-    /* ------------------------------------------------------------------ */
+    /* ---------- Contact ---------- */
     .contact-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 28px;
-      border: 1px solid var(--line-2);
+      position: relative; overflow: hidden; border-radius: 28px; border: 1px solid var(--line-2);
       background:
-        radial-gradient(90% 140% at 15% 0%, rgba(255,90,44,0.22), rgba(255,90,44,0) 60%),
-        radial-gradient(90% 140% at 100% 100%, rgba(255,174,59,0.16), rgba(255,174,59,0) 55%),
+        radial-gradient(90% 140% at 12% 0%, rgba(22,176,161,0.24), rgba(22,176,161,0) 60%),
+        radial-gradient(90% 140% at 100% 100%, rgba(36,214,196,0.16), rgba(36,214,196,0) 55%),
         var(--bg-2);
-      padding: clamp(2.5rem, 7vw, 5rem);
-      text-align: center;
+      padding: clamp(2.5rem, 7vw, 5rem); text-align: center;
     }
-    .contact-card h2 {
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      margin: var(--s-2) auto var(--s-3);
-      max-width: 16ch;
-    }
-    .contact-card p {
-      color: var(--ink-soft);
-      max-width: 46ch;
-      margin: 0 auto var(--s-4);
-    }
-    .contact-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--s-2);
-      justify-content: center;
-    }
+    .contact-card .badge { width: 76px; height: 76px; margin: 0 auto var(--s-3); }
+    .contact-card h2 { font-size: clamp(2rem, 6vw, 3.6rem); margin: 0 auto var(--s-3); max-width: 16ch; }
+    .contact-card p { color: var(--ink-soft); max-width: 46ch; margin: 0 auto var(--s-4); }
+    .contact-cta { display: flex; flex-wrap: wrap; gap: var(--s-2); justify-content: center; }
     .btn-lg { padding: 1.05rem 1.9rem; font-size: 1.02rem; }
 
-    /* ------------------------------------------------------------------ */
-    /* Footer                                                             */
-    /* ------------------------------------------------------------------ */
-    footer {
-      border-top: 1px solid var(--line);
-      padding: var(--s-4) 0;
-      margin-top: var(--s-3);
-    }
-    .foot-inner {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--s-3);
-      color: var(--ink-mute);
-      font-size: 0.9rem;
-    }
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: var(--s-4) 0; margin-top: var(--s-3); }
+    .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); color: var(--ink-mute); font-size: 0.9rem; }
+    .foot-brand { display: inline-flex; align-items: center; gap: 0.6rem; }
+    .foot-brand .badge { width: 34px; height: 34px; }
     .foot-social { display: flex; gap: var(--s-2); }
     .foot-social a {
-      width: 40px; height: 40px;
-      display: grid; place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      color: var(--ink-soft);
+      width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line);
+      border-radius: 50%; color: var(--ink-soft);
       transition: transform 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
     }
-    .foot-social a:hover {
-      transform: translateY(-3px);
-      color: var(--accent);
-      border-color: var(--line-2);
-    }
+    .foot-social a:hover { transform: translateY(-3px); color: var(--accent-2); border-color: var(--accent); }
 
-    /* ------------------------------------------------------------------ */
-    /* Reveal on scroll — only active when JS adds .js to <html>          */
-    /* Fully visible by default (no-JS safe)                              */
-    /* ------------------------------------------------------------------ */
-    .js .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    }
-    .js .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
+    /* ---------- Reveal (JS only; no-JS safe) ---------- */
+    .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .js .reveal.in { opacity: 1; transform: none; }
 
-    @media (min-width: 640px) {
-      .nav-links { display: flex; }
-    }
+    @media (min-width: 560px) { .nav-links { display: flex; } }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -565,25 +261,42 @@
 </head>
 <body>
 
-  <!-- ============================ NAV ============================ -->
+  <!-- ============ Reusable inline-SVG logo badge ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="quam-badge" viewBox="0 0 200 200">
+      <defs>
+        <path id="qb-top" d="M 24 100 A 76 76 0 0 1 176 100"/>
+        <path id="qb-bot" d="M 24 100 A 76 76 0 0 0 176 100"/>
+      </defs>
+      <circle cx="100" cy="100" r="97" fill="none" stroke="#14988c" stroke-width="2.5"/>
+      <circle cx="100" cy="100" r="86" fill="none" stroke="#14988c" stroke-width="17"/>
+      <circle cx="100" cy="100" r="76.5" fill="none" stroke="#14988c" stroke-width="2.5"/>
+      <g fill="#eef5f4" font-family="Inter, sans-serif" font-weight="700">
+        <text font-size="21" letter-spacing="7"><textPath href="#qb-top" startOffset="50%" text-anchor="middle">QUAM</textPath></text>
+        <text font-size="14.5" letter-spacing="2.2"><textPath href="#qb-bot" startOffset="50%" text-anchor="middle">ART &amp; DESIGN</textPath></text>
+      </g>
+      <g fill="#eef5f4"><path d="M14 100l9-6v12z"/><path d="M186 100l-9-6v12z"/></g>
+      <g fill="#14988c">
+        <circle cx="98" cy="96" r="31" fill="none" stroke="#14988c" stroke-width="13"/>
+        <rect x="71" y="90" width="54" height="12" rx="2"/>
+        <path d="M110 115 L143 151 L152 141 L119 105 Z"/>
+        <path d="M143 151 L156 146 L152 141 Z"/>
+      </g>
+    </symbol>
+  </defs></svg>
+
+  <!-- ============ NAV ============ -->
   <header class="nav" id="top">
     <div class="nav-inner">
       <a href="#top" class="brand" aria-label="Quam Art and Design — home">
-        <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M16 2C8.27 2 2 8.27 2 16s6.27 14 14 14c2.2 0 3.4-.9 3.4-2.6 0-.8-.3-1.4-.86-1.98-.53-.56-.84-1.13-.84-1.92 0-1.66 1.34-3 3-3H24c3.31 0 6-2.69 6-6C30 8.05 23.7 2 16 2Z" stroke="currentColor" stroke-width="2.2"/>
-          <circle cx="9.5" cy="12.5" r="1.9" fill="currentColor"/>
-          <circle cx="16" cy="9" r="1.9" fill="currentColor"/>
-          <circle cx="22.5" cy="12.5" r="1.9" fill="currentColor"/>
-        </svg>
-        <span>Quam<span class="brand-rest">&nbsp;Art &amp; Design</span></span>
+        <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Quam Art and Design logo"><use href="#quam-badge"/></svg>
+        <span class="name">Quam<span class="brand-rest">&nbsp;Art &amp; Design</span></span>
       </a>
-
       <nav class="nav-links" aria-label="Primary">
         <a href="#work">Work</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
-
       <a href="#contact" class="btn btn-primary">
         Get in touch
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -593,17 +306,15 @@
     </div>
   </header>
 
-  <!-- ============================ HERO ============================ -->
+  <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="mesh" aria-hidden="true">
-      <span class="blob b1"></span>
-      <span class="blob b2"></span>
-      <span class="blob b3"></span>
-      <span class="blob b4"></span>
+      <span class="blob b1"></span><span class="blob b2"></span>
+      <span class="blob b3"></span><span class="blob b4"></span>
     </div>
-
     <div class="hero-inner">
       <div class="hero-card reveal">
+        <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Quam Art and Design logo"><use href="#quam-badge"/></svg>
         <span class="eyebrow">Independent art &amp; design studio</span>
         <h1>Art with a pulse, design with a <em>point of view.</em></h1>
         <p class="lead">
@@ -621,17 +332,14 @@
           </a>
         </div>
         <div class="disciplines" aria-label="Disciplines">
-          <span>Brand &amp; Logos</span>
-          <span>Illustration</span>
-          <span>Painting</span>
-          <span>Websites</span>
-          <span>Clothing Design</span>
+          <span>Brand &amp; Logos</span><span>Illustration</span><span>Painting</span>
+          <span>Websites</span><span>Clothing Design</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ WORK ============================ -->
+  <!-- ============ WORK ============ -->
   <section id="work" class="section-pad">
     <div class="wrap">
       <div class="section-head reveal">
@@ -647,18 +355,18 @@
         <!-- Project 1 -->
         <article class="card reveal">
           <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Verdant Roots brand identity — leaf monogram on deep green">
-              <rect width="400" height="300" fill="#123024"/>
-              <circle cx="200" cy="150" r="150" fill="#16402f"/>
-              <path d="M200 60c-46 22-70 60-70 104 0 40 30 70 70 70s70-30 70-70c0-44-24-82-70-104Z" fill="none" stroke="#f5efe4" stroke-width="5"/>
-              <path d="M200 76v150M200 130c-26-6-42-22-46-44M200 168c26-6 42-22 46-44" fill="none" stroke="#ffae3b" stroke-width="5" stroke-linecap="round"/>
-              <text x="200" y="270" fill="#cfe6d6" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Verdant Roots</text>
+            <svg viewBox="0 0 400 300" role="img" aria-label="Verdant Roots brand identity — leaf monogram">
+              <rect width="400" height="300" fill="#0e2b33"/>
+              <circle cx="200" cy="150" r="150" fill="#123f42"/>
+              <path d="M200 60c-46 22-70 60-70 104 0 40 30 70 70 70s70-30 70-70c0-44-24-82-70-104Z" fill="none" stroke="#eef5f4" stroke-width="5"/>
+              <path d="M200 76v150M200 130c-26-6-42-22-46-44M200 168c26-6 42-22 46-44" fill="none" stroke="#24d6c4" stroke-width="5" stroke-linecap="round"/>
+              <text x="200" y="270" fill="#bfe0dc" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Verdant Roots</text>
             </svg>
           </div>
           <div class="body">
             <span class="kicker">Brand identity &amp; logo</span>
             <h3>Verdant Roots</h3>
-            <p>A full identity for a small-batch botanical skincare label — leaf-mark monogram, packaging system and a warm, earthy palette.</p>
+            <p>A full identity for a small-batch botanical skincare label — leaf-mark monogram, packaging system and a calm, natural palette.</p>
             <div class="meta">
               <span>Branding · 2025</span>
               <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -671,18 +379,18 @@
         <!-- Project 2 -->
         <article class="card reveal">
           <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Midnight Menagerie illustration — crescent moon and creatures on indigo">
-              <rect width="400" height="300" fill="#1a1636"/>
-              <circle cx="300" cy="80" r="46" fill="#ffae3b"/>
-              <circle cx="286" cy="72" r="46" fill="#1a1636"/>
-              <g fill="none" stroke="#f5efe4" stroke-width="4" stroke-linecap="round">
+            <svg viewBox="0 0 400 300" role="img" aria-label="Midnight Menagerie illustration — crescent moon and creatures">
+              <rect width="400" height="300" fill="#0d2036"/>
+              <circle cx="300" cy="80" r="46" fill="#24d6c4"/>
+              <circle cx="286" cy="72" r="46" fill="#0d2036"/>
+              <g fill="none" stroke="#eef5f4" stroke-width="4" stroke-linecap="round">
                 <path d="M60 210c30-40 70-40 100 0 30 40 70 40 100 0"/>
-                <path d="M90 150c18 0 18 26 0 26s-18-26 0-26Z" fill="#ff5a2c" stroke="none"/>
                 <path d="M150 120c10 22 30 22 40 0"/>
-                <path d="M230 168c14 0 14 22 0 22s-14-22 0-22Z" fill="#9c2a52" stroke="none"/>
               </g>
-              <g fill="#f5efe4"><circle cx="118" cy="96" r="3"/><circle cx="160" cy="70" r="2.5"/><circle cx="210" cy="110" r="2.5"/><circle cx="70" cy="120" r="2.5"/></g>
-              <text x="200" y="272" fill="#cbc6e6" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Midnight Menagerie</text>
+              <path d="M90 150c18 0 18 26 0 26s-18-26 0-26Z" fill="#16b0a1"/>
+              <path d="M230 168c14 0 14 22 0 22s-14-22 0-22Z" fill="#0d6b62"/>
+              <g fill="#eef5f4"><circle cx="118" cy="96" r="3"/><circle cx="160" cy="70" r="2.5"/><circle cx="210" cy="110" r="2.5"/><circle cx="70" cy="120" r="2.5"/></g>
+              <text x="200" y="272" fill="#a9c6cf" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Midnight Menagerie</text>
             </svg>
           </div>
           <div class="body">
@@ -701,18 +409,18 @@
         <!-- Project 3 -->
         <article class="card reveal">
           <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Concrete Bloom streetwear graphic — bold flower on a t-shirt silhouette">
-              <rect width="400" height="300" fill="#201a15"/>
-              <path d="M120 70h40l40 26 40-26h40l30 30-34 34v130H124V134L90 100l30-30Z" fill="#2b241d" stroke="#3a322a" stroke-width="3"/>
+            <svg viewBox="0 0 400 300" role="img" aria-label="Concrete Bloom streetwear graphic — flower on a t-shirt">
+              <rect width="400" height="300" fill="#0f1f2b"/>
+              <path d="M120 70h40l40 26 40-26h40l30 30-34 34v130H124V134L90 100l30-30Z" fill="#16303f" stroke="#22414f" stroke-width="3"/>
               <g transform="translate(200 155)">
-                <g fill="#ff5a2c">
+                <g fill="#16b0a1">
                   <ellipse rx="20" ry="46"/>
                   <ellipse rx="20" ry="46" transform="rotate(60)"/>
                   <ellipse rx="20" ry="46" transform="rotate(120)"/>
                 </g>
-                <circle r="20" fill="#ffae3b"/>
+                <circle r="20" fill="#24d6c4"/>
               </g>
-              <text x="200" y="250" fill="#f5efe4" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3" text-anchor="middle">BLOOM</text>
+              <text x="200" y="250" fill="#eef5f4" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3" text-anchor="middle">BLOOM</text>
             </svg>
           </div>
           <div class="body">
@@ -732,7 +440,7 @@
     </div>
   </section>
 
-  <!-- ============================ ABOUT ============================ -->
+  <!-- ============ ABOUT ============ -->
   <section id="about" class="section-pad" style="background: var(--bg-2);">
     <div class="wrap">
       <div class="about">
@@ -754,7 +462,6 @@
             If it needs a real point of view, we'll get on well.
           </p>
         </div>
-
         <div class="stats reveal">
           <div class="stat"><div class="n">7+</div><div class="l">Years drawing, painting &amp; designing</div></div>
           <div class="stat"><div class="n">60+</div><div class="l">Logos &amp; brand marks shipped</div></div>
@@ -765,10 +472,11 @@
     </div>
   </section>
 
-  <!-- ============================ CONTACT ============================ -->
+  <!-- ============ CONTACT ============ -->
   <section id="contact" class="section-pad">
     <div class="wrap">
       <div class="contact-card reveal">
+        <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Quam Art and Design logo"><use href="#quam-badge"/></svg>
         <span class="eyebrow" style="justify-content:center;">Let's make something</span>
         <h2>Got a brand, a canvas or a collection in mind?</h2>
         <p>
@@ -789,10 +497,13 @@
     </div>
   </section>
 
-  <!-- ============================ FOOTER ============================ -->
+  <!-- ============ FOOTER ============ -->
   <footer>
     <div class="wrap foot-inner">
-      <div>© <span id="year">2026</span> Quam Art &amp; Design — Graphic artist, illustrator &amp; painter.</div>
+      <div class="foot-brand">
+        <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Quam Art and Design logo"><use href="#quam-badge"/></svg>
+        <span>© <span id="year">2026</span> Quam Art &amp; Design — Graphic artist, illustrator &amp; painter.</span>
+      </div>
       <div class="foot-social">
         <a href="#top" aria-label="Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -817,22 +528,14 @@
   </footer>
 
   <script>
-    // Progressive enhancement: everything above is fully visible without JS.
     document.documentElement.classList.add('js');
-
-    // Current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Nav border on scroll
     var nav = document.querySelector('header.nav');
-    var onScroll = function () {
-      if (window.scrollY > 8) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    };
+    var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 8); };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Gentle fade-up reveals
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var items = document.querySelectorAll('.reveal');
     if (reduce || !('IntersectionObserver' in window)) {
@@ -840,10 +543,7 @@
     } else {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
       items.forEach(function (el) { io.observe(el); });
