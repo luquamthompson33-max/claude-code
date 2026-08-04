@@ -261,7 +261,26 @@
 </head>
 <body>
 
-  <!-- ============ Reusable inline-SVG logo badge ============ -->
+  <!-- ============ Reusable logo badge ============================================
+       The logo is defined ONCE here as #quam-badge and reused everywhere
+       (nav, hero, contact, footer) via <use href="#quam-badge">. To use your
+       OWN logo later, you only edit this one block — every spot updates.
+
+       ┌── TO SWAP IN YOUR REAL LOGO (logo.png) ──────────────────────────────┐
+       │ 1. Put your logo file next to this index.html (name it logo.png).    │
+       │    A transparent-background PNG (or SVG) looks best.                  │
+       │ 2. Delete everything between <symbol ...> and </symbol> below and     │
+       │    replace it with this single line:                                  │
+       │                                                                       │
+       │      <image href="logo.png" x="0" y="0" width="200" height="200"/>    │
+       │                                                                       │
+       │ That's it — the nav, hero, contact and footer all pick it up.         │
+       │                                                                       │
+       │ Prefer to keep ONE self-contained file (no separate image)? Use a     │
+       │ data URI instead: <image href="data:image/png;base64,PASTE_HERE" ... >│
+       │ (get the base64 from any "image to base64" site, paste it in).        │
+       └───────────────────────────────────────────────────────────────────────┘
+       Until then, the inline-SVG recreation below renders as the logo.        -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
     <symbol id="quam-badge" viewBox="0 0 200 200">
       <defs>
