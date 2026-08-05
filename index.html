@@ -91,9 +91,12 @@
     .brand .name {
       font-family: "Poppins", sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.015em;
     }
-    /* Collapse to just "Quam" on small screens so the pinned button always fits */
-    .brand-rest { display: none; }
-    @media (min-width: 460px) { .brand-rest { display: inline; } }
+    .brand-rest { display: inline; }
+    /* Keep the full name readable and fitting alongside the menu on small phones */
+    @media (max-width: 420px) {
+      .brand .name { font-size: 1rem; }
+      .brand .badge { width: 38px; height: 38px; }
+    }
 
     .nav-links { display: none; align-items: center; gap: var(--s-4); margin-left: auto; }
     .nav-links a { font-size: 0.94rem; color: var(--ink-soft); font-weight: 500; position: relative; transition: color 0.2s var(--ease); }
@@ -115,7 +118,27 @@
     .btn-primary:hover svg { transform: translate(2px, -2px); }
     .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-2); padding: 0.9rem 1.4rem; }
     .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); background: rgba(22, 176, 161, 0.08); }
-    .nav .btn-primary { margin-left: var(--s-3); }
+    .nav-cta { margin-left: var(--s-3); display: none; }
+
+    /* Mobile menu (hamburger) — works without JavaScript via <details> */
+    .nav-menu { position: relative; margin-left: auto; }
+    .nav-menu > summary {
+      list-style: none; cursor: pointer; width: 44px; height: 44px;
+      display: grid; place-items: center; border: 1px solid var(--line-2);
+      border-radius: 12px; color: var(--ink); background: rgba(238, 245, 244, 0.03);
+      transition: border-color 0.2s var(--ease);
+    }
+    .nav-menu > summary::-webkit-details-marker { display: none; }
+    .nav-menu > summary:hover { border-color: var(--accent); }
+    .nav-menu-panel {
+      position: absolute; right: 0; top: calc(100% + 10px); width: min(74vw, 264px);
+      display: flex; flex-direction: column; gap: 2px; padding: var(--s-2);
+      background: rgba(11, 27, 44, 0.98); border: 1px solid var(--line-2); border-radius: 14px;
+      box-shadow: 0 24px 60px -26px rgba(0, 0, 0, 0.95);
+    }
+    .nav-menu-panel a { padding: 0.8rem 0.85rem; border-radius: 10px; color: var(--ink-soft); font-weight: 600; }
+    .nav-menu-panel a:hover { background: rgba(238, 245, 244, 0.05); color: var(--ink); }
+    .nav-menu-panel .btn { margin: 0.4rem 0 0; justify-content: center; }
 
     /* ---------- Hero ---------- */
     .hero { position: relative; overflow: hidden; isolation: isolate; background: var(--bg); }
@@ -313,7 +336,11 @@
     .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
     .js .reveal.in { opacity: 1; transform: none; }
 
-    @media (min-width: 560px) { .nav-links { display: flex; } }
+    @media (min-width: 760px) {
+      .nav-links { display: flex; }
+      .nav-cta { display: inline-flex; }
+      .nav-menu { display: none; }
+    }
 
     /* ================= Conversion + "alive" additions ================= */
 
@@ -543,7 +570,7 @@
     <div class="nav-inner">
       <a href="#top" class="brand" aria-label="Quam Art and Design — home">
         <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Quam Art and Design logo"><use href="#quam-badge"/></svg>
-        <span class="name">Quam<span class="brand-rest">&nbsp;Art &amp; Design</span></span>
+        <span class="name">Quam Art &amp; Design</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#work">Work</a>
@@ -551,12 +578,24 @@
         <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#contact" class="btn btn-primary pulse-shine">
+      <a href="#contact" class="btn btn-primary pulse-shine nav-cta">
         Get in touch
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M7 17 17 7M17 7H8m9 0v9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
+      <details class="nav-menu">
+        <summary aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <div class="nav-menu-panel">
+          <a href="#work">Work</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+          <a href="#contact" class="btn btn-primary">Get in touch</a>
+        </div>
+      </details>
     </div>
   </header>
 
@@ -1040,6 +1079,17 @@
         }, { threshold: 0 });
         nio.observe(pricing);
       }
+    }
+
+    // Mobile menu: close after tapping a link or clicking outside (no-JS still works via <details>)
+    var navMenu = document.querySelector('.nav-menu');
+    if (navMenu) {
+      navMenu.querySelectorAll('.nav-menu-panel a').forEach(function (a) {
+        a.addEventListener('click', function () { navMenu.removeAttribute('open'); });
+      });
+      document.addEventListener('click', function (e) {
+        if (navMenu.hasAttribute('open') && !navMenu.contains(e.target)) navMenu.removeAttribute('open');
+      });
     }
   </script>
 </body>
