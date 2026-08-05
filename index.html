@@ -317,6 +317,32 @@
     .contact-card h2 { font-size: clamp(2rem, 6vw, 3.6rem); margin: 0 auto var(--s-3); max-width: 16ch; }
     .contact-card p { color: var(--ink-soft); max-width: 46ch; margin: 0 auto var(--s-4); }
     .contact-cta { display: flex; flex-wrap: wrap; gap: var(--s-2); justify-content: center; }
+
+    /* Contact form */
+    .contact-form { max-width: 560px; margin: 0 auto; text-align: left; display: grid; gap: var(--s-3); }
+    .contact-form .two { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+    @media (min-width: 560px) { .contact-form .two { grid-template-columns: 1fr 1fr; } }
+    .field { display: grid; gap: 0.4rem; }
+    .contact-form label { font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.02em; }
+    .contact-form input, .contact-form select, .contact-form textarea {
+      width: 100%; font: inherit; font-size: 1rem; color: var(--ink);
+      background: rgba(11, 27, 44, 0.6); border: 1px solid var(--line-2); border-radius: 12px;
+      padding: 0.8rem 0.9rem; outline: none;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--ink-mute); }
+    .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(22, 176, 161, 0.2);
+    }
+    .contact-form select option { color: #05141f; }
+    .contact-form .btn { width: 100%; justify-content: center; margin-top: 0.3rem; }
+    .form-note { font-size: 0.82rem; color: var(--ink-mute); text-align: center; margin: 0; }
+    .form-note a { color: var(--accent-2); }
+    .form-done { text-align: center; padding: var(--s-4) 0; }
+    .form-done svg { width: 58px; height: 58px; color: var(--accent-2); margin: 0 auto var(--s-2); }
+    .form-done h3 { font-family: "Poppins", sans-serif; font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .form-done p { color: var(--ink-soft); margin: 0 auto; max-width: 40ch; }
     .btn-lg { padding: 1.05rem 1.9rem; font-size: 1.02rem; }
 
     /* ---------- Footer ---------- */
@@ -928,16 +954,46 @@
           Tell me what you're building. I'll come back with a clear plan, honest timing and
           a look you won't find anywhere else.
         </p>
-        <div class="contact-cta">
-          <a href="mailto:luquamthompson33@gmail.com?subject=Project%20enquiry%20for%20Quam%20Art%20%26%20Design" class="btn btn-primary btn-lg">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2"/>
-              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Get in touch
-          </a>
-          <a href="mailto:luquamthompson33@gmail.com" class="btn btn-ghost btn-lg">luquamthompson33@gmail.com</a>
-        </div>
+        <form id="contact-form" class="contact-form" action="https://formsubmit.co/luquamthompson33@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New project enquiry — Quam Art &amp; Design">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+          <div class="two">
+            <div class="field">
+              <label for="cf-name">Your name</label>
+              <input id="cf-name" name="name" type="text" required placeholder="Jane Doe" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="cf-phone">Phone number</label>
+              <input id="cf-phone" name="phone" type="tel" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="cf-type">What type of work do you need?</label>
+            <select id="cf-type" name="project_type">
+              <option>Logo &amp; branding</option>
+              <option>Illustration</option>
+              <option>Painting / original art</option>
+              <option>Clothing / apparel design</option>
+              <option>Website</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-details">Tell me about your project</label>
+            <textarea id="cf-details" name="details" required placeholder="What you're making, your timeline, and any budget in mind…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">
+            Send request
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="form-note">Prefer email? <a href="mailto:luquamthompson33@gmail.com">luquamthompson33@gmail.com</a></p>
+        </form>
       </div>
     </div>
   </section>
@@ -1089,6 +1145,30 @@
       });
       document.addEventListener('click', function (e) {
         if (navMenu.hasAttribute('open') && !navMenu.contains(e.target)) navMenu.removeAttribute('open');
+      });
+    }
+
+    // Contact form: submit in-place and show a thank-you (no-JS still posts normally)
+    var cform = document.getElementById('contact-form');
+    if (cform && 'fetch' in window && 'FormData' in window) {
+      cform.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = cform.querySelector('button[type="submit"]');
+        var original = btn.innerHTML;
+        btn.disabled = true; btn.textContent = 'Sending…';
+        var ajax = cform.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+        fetch(ajax, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(cform) })
+          .then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); })
+          .then(function () {
+            cform.innerHTML = '<div class="form-done">' +
+              '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><path d="m8 12.5 2.5 2.5 5.5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '<h3>Thank you — your request is in!</h3>' +
+              '<p>I\'ll get back to you within 1–2 business days. Talk soon.</p></div>';
+          })
+          .catch(function () {
+            // Network/other issue: fall back to a normal browser submit
+            btn.disabled = false; btn.innerHTML = original; cform.submit();
+          });
       });
     }
   </script>
