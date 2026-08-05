@@ -221,6 +221,32 @@
     .card .meta .arrow { color: var(--accent-2); transition: transform 0.3s var(--ease); }
     .card:hover .meta .arrow { transform: translate(4px, -4px); }
 
+    /* ---------- Upload-driven work gallery ---------- */
+    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-3); }
+    @media (min-width: 820px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+    .tile {
+      position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--line); background-color: var(--bg-2);
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .tile:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 24px 50px -30px rgba(0,0,0,0.9); }
+    .tile figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 0.1rem;
+      padding: var(--s-4) var(--s-3) var(--s-2);
+      background: linear-gradient(180deg, rgba(11,27,44,0) 0%, rgba(11,27,44,0.82) 100%);
+    }
+    .tile .t-tag { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-2); font-weight: 600; }
+    .tile .t-title { font-family: "Poppins", sans-serif; font-weight: 600; font-size: 1.05rem; }
+    /* Each tile tries /work/N.jpg, then /work/N.png, then a brand gradient. */
+    .tile-1 { background-image: url('/work/1.jpg'), url('/work/1.png'), linear-gradient(150deg, #16b0a1, #0f5f68 55%, #123a52); }
+    .tile-2 { background-image: url('/work/2.jpg'), url('/work/2.png'), linear-gradient(150deg, #1a8f83, #0d4f5e 55%, #102a3f); }
+    .tile-3 { background-image: url('/work/3.jpg'), url('/work/3.png'), linear-gradient(150deg, #0f6f6a, #123a52 55%, #0b1b2c); }
+    .tile-4 { background-image: url('/work/4.jpg'), url('/work/4.png'), linear-gradient(150deg, #24d6c4, #0f6f6a 55%, #123a52); }
+    .tile-5 { background-image: url('/work/5.jpg'), url('/work/5.png'), linear-gradient(150deg, #0d6b62, #102a3f 55%, #0b1b2c); }
+    .tile-6 { background-image: url('/work/6.jpg'), url('/work/6.png'), linear-gradient(150deg, #16b0a1, #123a52 60%, #0b1b2c); }
+
+
     /* ---------- About ---------- */
     .about { display: grid; grid-template-columns: 1fr; gap: var(--s-5); align-items: center; }
     @media (min-width: 900px) { .about { grid-template-columns: 1.15fr 0.85fr; gap: var(--s-6); } }
@@ -643,97 +669,22 @@
       <div class="section-head reveal">
         <div>
           <span class="eyebrow">Selected work</span>
-          <h2>Three recent projects, three different mediums.</h2>
+          <h2>Recent work, straight from the studio.</h2>
         </div>
-        <p>A logo system, an illustrated series and a garment capsule — one hand behind all of it.</p>
+        <p>A living gallery — new pieces drop in here as they're finished.</p>
       </div>
 
-      <div class="grid">
-
-        <!-- Project 1 -->
-        <article class="card reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Verdant Roots brand identity — leaf monogram">
-              <rect width="400" height="300" fill="#0e2b33"/>
-              <circle cx="200" cy="150" r="150" fill="#123f42"/>
-              <path d="M200 60c-46 22-70 60-70 104 0 40 30 70 70 70s70-30 70-70c0-44-24-82-70-104Z" fill="none" stroke="#eef5f4" stroke-width="5"/>
-              <path d="M200 76v150M200 130c-26-6-42-22-46-44M200 168c26-6 42-22 46-44" fill="none" stroke="#24d6c4" stroke-width="5" stroke-linecap="round"/>
-              <text x="200" y="270" fill="#bfe0dc" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Verdant Roots</text>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="kicker">Brand identity &amp; logo</span>
-            <h3>Verdant Roots</h3>
-            <p>A full identity for a small-batch botanical skincare label — leaf-mark monogram, packaging system and a calm, natural palette.</p>
-            <div class="meta">
-              <span>Branding · 2025</span>
-              <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17 17 7M17 7H8m9 0v9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 2 -->
-        <article class="card reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Midnight Menagerie illustration — crescent moon and creatures">
-              <rect width="400" height="300" fill="#0d2036"/>
-              <circle cx="300" cy="80" r="46" fill="#24d6c4"/>
-              <circle cx="286" cy="72" r="46" fill="#0d2036"/>
-              <g fill="none" stroke="#eef5f4" stroke-width="4" stroke-linecap="round">
-                <path d="M60 210c30-40 70-40 100 0 30 40 70 40 100 0"/>
-                <path d="M150 120c10 22 30 22 40 0"/>
-              </g>
-              <path d="M90 150c18 0 18 26 0 26s-18-26 0-26Z" fill="#16b0a1"/>
-              <path d="M230 168c14 0 14 22 0 22s-14-22 0-22Z" fill="#0d6b62"/>
-              <g fill="#eef5f4"><circle cx="118" cy="96" r="3"/><circle cx="160" cy="70" r="2.5"/><circle cx="210" cy="110" r="2.5"/><circle cx="70" cy="120" r="2.5"/></g>
-              <text x="200" y="272" fill="#a9c6cf" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">Midnight Menagerie</text>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="kicker">Editorial illustration</span>
-            <h3>Midnight Menagerie</h3>
-            <p>A ten-piece illustrated series for a short-fiction anthology — inky night creatures painted digitally, then hand-finished in gouache.</p>
-            <div class="meta">
-              <span>Illustration · 2025</span>
-              <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17 17 7M17 7H8m9 0v9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 3 -->
-        <article class="card reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 300" role="img" aria-label="Concrete Bloom streetwear graphic — flower on a t-shirt">
-              <rect width="400" height="300" fill="#0f1f2b"/>
-              <path d="M120 70h40l40 26 40-26h40l30 30-34 34v130H124V134L90 100l30-30Z" fill="#16303f" stroke="#22414f" stroke-width="3"/>
-              <g transform="translate(200 155)">
-                <g fill="#16b0a1">
-                  <ellipse rx="20" ry="46"/>
-                  <ellipse rx="20" ry="46" transform="rotate(60)"/>
-                  <ellipse rx="20" ry="46" transform="rotate(120)"/>
-                </g>
-                <circle r="20" fill="#24d6c4"/>
-              </g>
-              <text x="200" y="250" fill="#eef5f4" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3" text-anchor="middle">BLOOM</text>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="kicker">Clothing &amp; apparel graphics</span>
-            <h3>Concrete Bloom</h3>
-            <p>A four-piece streetwear capsule — placement prints, embroidery mock-ups and garment design for an independent city label.</p>
-            <div class="meta">
-              <span>Clothing · 2024</span>
-              <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17 17 7M17 7H8m9 0v9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </article>
-
+      <!-- Upload-driven gallery. To add a piece: upload an image named
+           1.jpg (or 1.png) into the /work/ folder on this branch; it fills
+           tile 1. Use 2, 3, 4, 5, 6 for the other tiles. Edit the tag/title
+           text below to label each piece. Empty tiles show a brand gradient. -->
+      <div class="gallery">
+        <figure class="tile tile-1 reveal"><figcaption><span class="t-tag">Branding</span><span class="t-title">Logo &amp; identity</span></figcaption></figure>
+        <figure class="tile tile-2 reveal"><figcaption><span class="t-tag">Illustration</span><span class="t-title">Editorial series</span></figcaption></figure>
+        <figure class="tile tile-3 reveal"><figcaption><span class="t-tag">Painting</span><span class="t-title">Original canvas</span></figcaption></figure>
+        <figure class="tile tile-4 reveal"><figcaption><span class="t-tag">Clothing</span><span class="t-title">Apparel graphics</span></figcaption></figure>
+        <figure class="tile tile-5 reveal"><figcaption><span class="t-tag">Poster</span><span class="t-title">Print design</span></figcaption></figure>
+        <figure class="tile tile-6 reveal"><figcaption><span class="t-tag">Website</span><span class="t-title">Web design</span></figcaption></figure>
       </div>
     </div>
   </section>
