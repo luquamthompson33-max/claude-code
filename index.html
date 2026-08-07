@@ -271,7 +271,8 @@
     .rail-head { display: flex; align-items: center; justify-content: space-between; margin: 34px 0 16px; }
     .rail-head .title { display: flex; align-items: center; gap: 7px; font-size: 17px; font-weight: 650; letter-spacing: -0.015em; }
     .rail-head .title svg { width: 17px; height: 17px; color: var(--ink-faint); }
-    .view-all { color: var(--ink-soft); font-size: 13.5px; font-weight: 550; display: inline-flex; align-items: center; gap: 4px; transition: color .18s; }
+    .view-all { color: var(--ink-soft); font-size: 13.5px; font-weight: 550; display: inline-flex; align-items: center; gap: 4px; transition: color .18s; cursor: pointer; }
+    .rail-head .title { cursor: pointer; }
     .view-all:hover { color: var(--ink); }
     .view-all svg { width: 15px; height: 15px; }
 
@@ -286,6 +287,7 @@
       border-radius: var(--r); overflow: hidden;
       transition: transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
     }
+    .card { cursor: pointer; }
     .card:hover { transform: translateY(-4px); border-color: var(--line-2); box-shadow: var(--shadow-lg); }
     .thumb { position: relative; aspect-ratio: 4 / 3.1; display: grid; place-items: center; overflow: hidden; border-bottom: 1px solid var(--line); }
     .thumb svg { width: 100%; height: 100%; display: block; }
@@ -305,6 +307,8 @@
     .thumb .heart svg { width: 15px; height: 15px; }
     .card:hover .heart { opacity: 1; }
     .heart:hover { transform: scale(1.08); }
+    .card .heart.saved { opacity: 1; background: var(--ink); color: #fff; border-color: var(--ink); }
+    .heart.saved svg path { fill: currentColor; }
     .card-body { padding: 13px 15px 15px; }
     .card-body .name { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
     .card-body .meta { margin-top: 4px; font-size: 12.5px; color: var(--ink-faint); display: flex; align-items: center; gap: 6px; }
@@ -720,6 +724,70 @@
         showToast(tab.textContent.trim() + " — showing matching workflows");
       });
     });
+
+    /* ---------- Sidebar navigation ---------- */
+    const pageTitle = document.querySelector(".topbar h1");
+    document.querySelectorAll(".rail-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const name = item.querySelector("span").textContent.trim();
+        document.querySelector(".rail-item.active")?.classList.remove("active");
+        item.classList.add("active");
+        pageTitle.textContent = name === "Create" ? "AI Hub" : name;
+        showToast(name === "AI Hub" ? "You're on the AI Hub" : "Opening " + name + "…");
+      });
+    });
+
+    /* ---------- Feature tiles → seed the composer ---------- */
+    const starters = {
+      "Logo generator":   "A minimalist logo for ",
+      "T-shirt designer": "A print-ready t-shirt graphic of ",
+      "Brand kit builder":"A full brand kit for ",
+      "Art studio":       "A piece of art depicting "
+    };
+    document.querySelectorAll(".tile").forEach(tile => {
+      tile.addEventListener("click", () => {
+        const title = tile.querySelector("h4").textContent.trim();
+        prompt.value = starters[title] || "";
+        prompt.focus();
+        prompt.setSelectionRange(prompt.value.length, prompt.value.length);
+        sync();
+        showToast(title + " — finish your prompt and hit generate");
+        document.querySelector(".canvas").scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    /* ---------- Cards: remix on click, save on heart ---------- */
+    document.querySelectorAll(".scroller").forEach(scroller => {
+      scroller.addEventListener("click", e => {
+        const heart = e.target.closest(".heart");
+        if (heart) {
+          e.stopPropagation();
+          heart.classList.toggle("saved");
+          showToast(heart.classList.contains("saved") ? "Saved to Likes" : "Removed from Likes");
+          return;
+        }
+        const card = e.target.closest(".card");
+        if (!card) return;
+        const name = card.querySelector(".name").textContent.trim();
+        prompt.value = "Remix “" + name + "” — ";
+        prompt.focus();
+        prompt.setSelectionRange(prompt.value.length, prompt.value.length);
+        sync();
+        showToast("Remixing “" + name + "”");
+        document.querySelector(".canvas").scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    /* ---------- Remaining chrome: give every control a response ---------- */
+    const wire = (sel, msg) => document.querySelectorAll(sel).forEach(el =>
+      el.addEventListener("click", () => showToast(typeof msg === "function" ? msg(el) : msg)));
+    wire(".view-all", "Loading more workflows…");
+    wire(".rail-head .title", el => el.textContent.trim() + " — view all");
+    wire(".upgrade", "Opening Pro plans…");
+    wire(".model-pick", "Model: Agentic AI (Beta)");
+    wire(".drop", "Upload a reference image to guide the design");
+    wire(".mini-btn", "Attach a file");
+    document.querySelector(".icon-btn").addEventListener("click", () => showToast("You're all caught up — no new notifications"));
   </script>
 </body>
 </html>
