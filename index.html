@@ -128,6 +128,22 @@ section{padding-block:clamp(4.5rem, 9vw, 7.5rem)}
 
 .cta-lg{--pad:18px 34px; font-size:1.1rem}
 
+/* secondary (outline) button — used on the dark hero */
+.cta-ghost{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-body); font-weight:700; font-size:1.02rem;
+  padding:16px 26px; border-radius:999px; white-space:nowrap;
+  color:#EAF1FB; background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.34);
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.cta-ghost:hover{transform:translateY(-2px); background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.62)}
+.cta-ghost .ext{width:16px; height:16px; flex:none; opacity:.85}
+.cta-fallback .np{color:#C3D8F7}
+.nav-links a .ext{width:12px; height:12px; margin-left:3px; opacity:.65; vertical-align:-1px}
+.foot-link{color:inherit; text-decoration:underline; text-underline-offset:2px; text-decoration-color:var(--line); transition:color .15s}
+.foot-link:hover{color:var(--ink)}
+
 .cta-fallback{font-size:.94rem; font-weight:600; margin-top:16px}
 .cta-fallback a{text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1.5px; font-variant-numeric:tabular-nums; white-space:nowrap; transition:opacity .15s}
 .cta-fallback a:hover{opacity:.75}
@@ -366,6 +382,7 @@ html.js .uline.in path{stroke-dashoffset:0}
       <a href="#how">How it works</a>
       <a href="#benefits">Benefits</a>
       <a href="#faq">FAQ</a>
+      <a href="https://www.hinshawshonda.com/" target="_blank" rel="noopener noreferrer">Inventory<svg class="ext" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
     <a class="cta nav-cta" href="sms:+12536516241?&amp;body=Hi%20WAHondaGuy%2C%20I'm%20looking%20for...">Find Your Car</a>
   </div>
@@ -394,12 +411,12 @@ html.js .uline.in path{stroke-dashoffset:0}
           <svg class="spark s1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg>
           <svg class="spark s2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg>
         </a>
-        <span class="hero-note">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          No pressure, no obligation
-        </span>
+        <a class="cta-ghost" href="https://www.hinshawshonda.com/" target="_blank" rel="noopener noreferrer">
+          Browse the inventory
+          <svg class="ext" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <p class="cta-fallback reveal" data-d="3">or text <a href="sms:+12536516241">253-651-6241</a></p>
+      <p class="cta-fallback reveal" data-d="3"><span class="np">No pressure, no obligation</span> · or text <a href="sms:+12536516241">253-651-6241</a></p>
 
       <div class="proof reveal">
         <div class="item"><span class="num" data-count="5.0" data-dec="1">5.0</span><span class="cap">Buyer rating</span></div>
@@ -571,7 +588,7 @@ html.js .uline.in path{stroke-dashoffset:0}
         <span class="mark-tile" style="width:28px;height:28px;border-radius:7px"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#emblem"/></svg></span>
         <span class="wordmark" style="font-size:.95rem"><span class="wa">WA</span>HONDAGUY</span>
       </span>
-      <span>Honda of Auburn · Serving Washington State</span>
+      <span><a class="foot-link" href="https://www.hinshawshonda.com/" target="_blank" rel="noopener noreferrer">Hinshaw's Honda, Auburn</a> · Serving Washington State</span>
       <button class="theme-btn" id="theme" type="button" aria-label="Toggle dark mode">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
