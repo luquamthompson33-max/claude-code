@@ -1,5 +1,10 @@
 # ACID INK — Design System
 
+The design system for **Create Your Utopia** — kept intentionally
+**brand-neutral and reusable**, so it can be dropped onto any CYU project (or
+client work) without locking in a logo, brand color, or fixed copy. Swap the
+placeholder content, not the system.
+
 An **acid-brutalist streetwear** design system, extracted from the Pascal Nueross
 tattoo site + moodboard. The mood: near-black canvas, one hi-vis lime, heavy
 grotesk headlines, raw marker script, and mono bracket labels. Built to feel
