@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Knows Me — @WAHONDAGUY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ===== AURORA palette (default) ===== */
+    --c1:#a855f7;   /* purple  */
+    --c2:#ec4899;   /* pink    */
+    --c3:#f59e0b;   /* amber   */
+    --c4:#8b5cf6;   /* violet  */
+    --ink:#faf5ff;
+    --ink-dim:#e9d5ff;
+    --ink-mute:#c4b5fd;
+    --glow:rgba(245,158,11,0.35);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  html,body{height:100%;}
+  body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 16px;
+    background:#09090b; /* zinc-950 */
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* soft radial orange glow behind the card */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(60% 55% at 50% 45%, var(--glow) 0%, rgba(245,158,11,0.08) 35%, rgba(9,9,11,0) 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ===== THE CARD ===== */
+  .card{
+    position:relative;
+    width:480px;
+    height:672px;
+    max-width:100%;
+    border-radius:28px;
+    overflow:hidden;
+    padding:34px 32px 26px;
+    display:flex;
+    flex-direction:column;
+    color:var(--ink);
+    z-index:1;
+    background:
+      radial-gradient(120% 90% at 12% 8%, color-mix(in srgb, var(--c1) 55%, transparent) 0%, transparent 45%),
+      radial-gradient(110% 100% at 92% 18%, color-mix(in srgb, var(--c2) 50%, transparent) 0%, transparent 42%),
+      radial-gradient(130% 120% at 85% 96%, color-mix(in srgb, var(--c3) 45%, transparent) 0%, transparent 46%),
+      radial-gradient(120% 110% at 10% 92%, color-mix(in srgb, var(--c4) 50%, transparent) 0%, transparent 48%),
+      linear-gradient(135deg, #1e1035 0%, #2a1245 40%, #1a0e2e 75%, #120a22 100%);
+    box-shadow:
+      0 40px 80px -20px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      inset 0 0 0 1px rgba(255,255,255,0.04),
+      inset 0 -40px 80px -40px rgba(0,0,0,0.5);
+  }
+
+  /* conic-gradient holographic foil strip along top edge */
+  .foil{
+    position:absolute;
+    top:0;left:0;right:0;
+    height:6px;
+    background:conic-gradient(from 180deg at 50% 50%,
+      #a855f7, #ec4899, #f59e0b, #8b5cf6, #22d3ee, #ec4899, #a855f7);
+    filter:saturate(1.4) brightness(1.15);
+    opacity:0.95;
+    z-index:3;
+  }
+
+  /* SVG noise grain overlay */
+  .grain{
+    position:absolute;
+    inset:0;
+    z-index:4;
+    pointer-events:none;
+    mix-blend-mode:overlay;
+    opacity:0.08;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .content{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;}
+
+  .wordmark{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    font-weight:500;
+    letter-spacing:0.22em;
+    color:var(--ink-mute);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+
+  .name{
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    font-size:52px;
+    line-height:0.95;
+    letter-spacing:-0.01em;
+    color:#fff;
+    text-shadow:0 2px 24px rgba(168,85,247,0.35);
+    margin-bottom:2px;
+  }
+  .subline{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    color:var(--ink-dim);
+    letter-spacing:0.01em;
+    margin-bottom:18px;
+  }
+
+  .panels{display:flex;flex-direction:column;gap:11px;flex:1;}
+
+  .panel{
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(14px) saturate(1.2);
+    -webkit-backdrop-filter:blur(14px) saturate(1.2);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    padding:13px 15px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .panel-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:0.18em;
+    color:var(--c3);
+    text-transform:uppercase;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .panel-label::before{
+    content:"";
+    width:5px;height:5px;border-radius:50%;
+    background:var(--c2);
+    box-shadow:0 0 8px var(--c2);
+  }
+  .panel ul{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .panel li{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    line-height:1.35;
+    color:var(--ink);
+    padding-left:14px;
+    position:relative;
+  }
+  .panel li::before{
+    content:"›";
+    position:absolute;left:0;top:-1px;
+    color:var(--c1);
+    font-weight:700;
+  }
+  .panel li b{font-weight:700;color:#fff;}
+
+  .foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:16px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    color:var(--ink-mute);
+  }
+  .foot .site{color:var(--ink-dim);font-weight:700;letter-spacing:0.12em;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="foil"></div>
+    <div class="grain"></div>
+    <div class="content">
+      <div class="wordmark">CCC · STAGE 2 · CLAUDE KNOWS ME</div>
+
+      <div class="name">@WAHONDAGUY</div>
+      <div class="subline">Honda sales consultant &amp; founder · Tacoma, WA · building toward AI entrepreneur</div>
+
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-label">Building</div>
+          <ul>
+            <li><b>Honda sales</b> — growing the @WAHONDAGUY brand toward 20+ vehicle sales / month.</li>
+            <li><b>Trading engine</b> — automated price-action alerts (XAU/USD, forex) via Python + Telegram.</li>
+            <li><b>Create Your Utopia</b> — creative studio &amp; screen printing, automated down to labor-only.</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="panel-label">How I Work</div>
+          <ul>
+            <li>Automated, scalable, brand-driven models over one-off manual work.</li>
+            <li>Ships fast &amp; iterates — flags issues, returns for targeted fixes, not full redos.</li>
+            <li>Stack: Lovable, Supabase, GoHighLevel, ManyChat, Claude API, Telegram.</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="panel-label">Definition of Done</div>
+          <ul>
+            <li>Functional and deployed — working systems over concepts.</li>
+            <li>On-brand and non-generic — never templated, AI-generic, or copyright-risky.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span>SEPT 13, 2026</span>
+        <span class="site">claudecodeclub.ai</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
