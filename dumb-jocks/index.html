@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DUMB JOCKS · Half zombie. All baller.</title>
+<meta name="description" content="Dumb Jocks is hand-pulled streetwear out of Tacoma since 2013. Half-zombie art, Rodman-loud color, printed one shop at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* scene: a Tacoma print shop at 2am, dye-stained hands peeling a fresh tee
+     off the press under one buzzing work light -> dark world, toxic green */
+  --bg: oklch(0.15 0.02 155);
+  --bg2: oklch(0.19 0.025 155);
+  --ink: oklch(0.94 0.012 150);
+  --muted: oklch(0.63 0.02 150);
+  --accent: oklch(0.82 0.19 150);
+  --line: oklch(0.30 0.02 155);
+  --disp:'Anton',sans-serif;
+  --sans:'Inter',sans-serif;
+  --mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;
+  line-height:1.6;overflow-x:hidden;
+}
+/* drifting mesh background */
+body::before{
+  content:'';position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(40% 35% at 20% 25%, oklch(0.26 0.08 150 / .55), transparent 70%),
+    radial-gradient(35% 40% at 80% 70%, oklch(0.22 0.05 160 / .5), transparent 70%),
+    radial-gradient(30% 30% at 60% 15%, oklch(0.24 0.06 140 / .45), transparent 70%);
+  animation:mesh 26s ease-in-out infinite alternate;
+}
+@keyframes mesh{from{transform:translate3d(-2%,-1%,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.06)}}
+/* fine grain over everything */
+body::after{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--accent);color:oklch(0.15 0.02 155)}
+em{font-style:normal;color:var(--accent)}
+b{font-weight:500;color:var(--ink)}
+a{color:inherit}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:22px 4vw;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  mix-blend-mode:difference;
+}
+nav .dot{color:var(--accent)}
+
+/* ---------- hero (ambient loop, CSS) ---------- */
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end}
+.hero .goo{position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(45% 55% at 30% 40%, oklch(0.34 0.15 150 / .9), transparent 70%),
+    radial-gradient(50% 45% at 72% 66%, oklch(0.28 0.12 160 / .85), transparent 72%),
+    radial-gradient(35% 40% at 55% 22%, oklch(0.40 0.17 140 / .7), transparent 70%),
+    var(--bg);
+  filter:blur(8px) contrast(1.15);
+  animation:goo 18s ease-in-out infinite alternate;
+}
+@keyframes goo{
+  from{transform:translate3d(-3%,-2%,0) scale(1.05) rotate(-1deg)}
+  to{transform:translate3d(3%,2%,0) scale(1.12) rotate(1.5deg)}
+}
+.hero .veil{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(to bottom, oklch(0.15 0.02 155/.4), transparent 30%, transparent 55%, oklch(0.15 0.02 155) 100%)}
+.hwm{position:relative;z-index:2;left:4vw;bottom:10vh;max-width:820px}
+.eye{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;text-shadow:0 1px 12px oklch(0.1 0.02 155/.9)}
+h1{
+  font-family:var(--disp);font-weight:400;font-size:clamp(72px,15vw,220px);line-height:.86;letter-spacing:.01em;text-transform:uppercase;
+  text-shadow:0 2px 30px oklch(0.08 0.02 155/.9);
+}
+.lede{margin-top:22px;max-width:540px;font-size:17px;color:oklch(0.86 0.015 150);text-shadow:0 1px 10px oklch(0.1 0.02 155/.9)}
+.scrollcue{position:absolute;z-index:2;right:4vw;bottom:10vh;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
+
+/* ---------- shared section chrome ---------- */
+section{position:relative;padding:18vh 4vw}
+.wrap{max-width:1180px;margin:0 auto}
+.k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+h2{font-family:var(--disp);font-weight:400;font-size:clamp(44px,7vw,104px);line-height:.94;letter-spacing:.01em;text-transform:uppercase;margin-bottom:26px}
+.body{max-width:60ch;color:var(--muted);font-size:17px}
+.body b{color:var(--ink)}
+
+/* thesis */
+.thesis h2{max-width:14ch}
+
+/* lesson-style two-up blocks */
+.block .grid{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center}
+
+/* asset slot placeholders (swap for real media) */
+.slot{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line);
+  background:
+    radial-gradient(60% 60% at 35% 35%, oklch(0.34 0.15 150 / .8), transparent 70%),
+    radial-gradient(50% 50% at 75% 70%, oklch(0.26 0.11 160 / .75), transparent 72%),
+    var(--bg2);
+  filter:contrast(1.05);
+}
+.slot::before{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.07;mix-blend-mode:overlay;}
+.slot::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg, transparent 0 3px, oklch(0.1 0.02 155/.25) 3px 4px);
+  opacity:.5;pointer-events:none;}
+.slot .tag{position:absolute;left:16px;top:14px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 8px;border-radius:3px}
+.slot .cap{position:absolute;left:18px;bottom:16px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.92 0.01 150);text-shadow:0 1px 10px oklch(0.1 0.02 155/.95)}
+.slot.wide{aspect-ratio:16/10}
+.slot.tall{aspect-ratio:3/4}
+
+/* law list */
+.law{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.law div{display:flex;gap:14px;font-size:15px;color:var(--muted)}
+.law div::before{content:'//';color:var(--accent);font-family:var(--mono);font-weight:700}
+.law b{color:var(--ink);font-weight:500}
+
+/* gallery band: image / video / image */
+.gallery{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:20px;align-items:center;margin-top:2vh}
+
+/* rows */
+.rows{margin-top:4vh;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:80px 1fr 1.3fr;gap:32px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line)}
+.row .n{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.row .t{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3vw,40px);text-transform:uppercase;letter-spacing:.01em}
+.row .d{font-size:15px;color:var(--muted)}
+
+/* band */
+.band{padding:22vh 4vw;text-align:center}
+.band h2{max-width:20ch;margin:0 auto}
+
+/* reserve / CTA */
+.reserve{text-align:center;padding:24vh 4vw}
+.cta{
+  display:inline-block;margin-top:36px;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  border:1px solid var(--accent);color:var(--accent);padding:18px 44px;border-radius:999px;text-decoration:none;transition:.3s;
+}
+.cta:hover{background:var(--accent);color:oklch(0.15 0.02 155)}
+
+footer{
+  position:relative;min-height:240px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--muted);text-align:center;
+}
+footer::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(50% 90% at 50% 120%, oklch(0.45 0.17 150/.5), transparent 70%);
+  animation:aurora 9s ease-in-out infinite alternate;
+}
+@keyframes aurora{from{opacity:.5;transform:translateX(-6%)}to{opacity:1;transform:translateX(6%)}}
+footer span{position:relative}
+footer em{color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(40px)}
+
+@media(max-width:860px){
+  .block .grid{grid-template-columns:1fr;gap:36px}
+  .gallery{grid-template-columns:1fr}
+  .row{grid-template-columns:50px 1fr}
+  .row .d{grid-column:2}
+}
+</style>
+</head>
+<body>
+
+<nav><span>DUMB JOCKS<span class="dot"> ·</span> EST. 2013</span><span>HALF ZOMBIE · ALL BALLER</span></nav>
+
+<!-- 1 · HERO (ambient loop) -->
+<header class="hero">
+  <div class="goo"></div>
+  <div class="veil"></div>
+  <div class="hwm">
+    <div class="eye">Tacoma, WA · Streetwear since 2013</div>
+    <h1>DUMB<br>JOCKS</h1>
+    <p class="lede">Hand-pulled streetwear for people who never learned to sit still. Half-zombie art, Rodman-loud color, printed one shop at a time.</p>
+  </div>
+  <div class="scrollcue">scroll</div>
+</header>
+
+<!-- 2 · THESIS -->
+<section class="thesis" id="thesis">
+  <div class="wrap">
+    <div class="k reveal">What we make</div>
+    <h2 class="reveal">Half zombie. <em>All baller.</em></h2>
+    <p class="body reveal">Every piece starts as ink on a screen in Tacoma. No dropshipping, no blank-label reprints. Just heavyweight cotton, hand-pulled art, and a decade of not caring what the mall thinks.</p>
+  </div>
+</section>
+
+<!-- 3 · FEATURES (two text + image pairs: g1, g2) -->
+<section class="block" id="features">
+  <div class="wrap">
+    <div class="grid" style="margin-bottom:14vh">
+      <div class="reveal">
+        <div class="k">Feature 01</div>
+        <h2>Printed,<br><em>not ordered.</em></h2>
+        <p class="body">Each run is pulled by hand on a manual press. Small batches, off-register on purpose, no two exactly alike.</p>
+        <div class="law">
+          <div><b>Manual press</b>, one pull at a time.</div>
+          <div><b>Heavyweight cotton</b>, never blanks off a catalog.</div>
+        </div>
+      </div>
+      <div class="slot tall reveal"><span class="tag">g1</span><span class="cap">the context shot · tee on the press</span></div>
+    </div>
+    <div class="grid">
+      <div class="slot tall reveal" style="order:2"><span class="tag">g2</span><span class="cap">the macro · ink and thread detail</span></div>
+      <div class="reveal" style="order:1">
+        <div class="k">Feature 02</div>
+        <h2>Built to<br><em>get wrecked.</em></h2>
+        <p class="body">Cotton that takes a beating and looks better for it. Wear it to the court, not the closet.</p>
+        <div class="law">
+          <div><b>Pre-shrunk</b>, cut boxy for movement.</div>
+          <div><b>Fades on purpose</b>, ages like a good pair of hi-tops.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · GALLERY BAND (image · video · image) -->
+<section id="gallery" style="padding-top:6vh;padding-bottom:6vh">
+  <div class="wrap">
+    <div class="k reveal">The lineup</div>
+    <div class="gallery">
+      <div class="slot tall reveal"><span class="tag">g3</span><span class="cap">hero still · full fit</span></div>
+      <div class="slot wide reveal"><span class="tag">video · hero.mp4</span><span class="cap">the loop · press in motion</span></div>
+      <div class="slot tall reveal"><span class="tag">video · middle.mp4</span><span class="cap">sibling shot · pull and peel</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · SECOND MOMENT (band) -->
+<section class="band">
+  <h2 class="reveal">A decade deep and <em>still undefeated.</em></h2>
+</section>
+
+<!-- 6 · ROWS (three numbered editorial details) -->
+<section id="details">
+  <div class="wrap">
+    <div class="k reveal">Why it hits different</div>
+    <div class="rows">
+      <div class="row reveal"><span class="n">01</span><span class="t">The art</span><span class="d">Half-zombie characters, drawn by hand. Decay meets the hardwood, no clip-art, no AI slop.</span></div>
+      <div class="row reveal"><span class="n">02</span><span class="t">The fit</span><span class="d">Boxy, heavy, pre-shrunk. Cut for movement, not the size chart on the back of a bag.</span></div>
+      <div class="row reveal"><span class="n">03</span><span class="t">The drops</span><span class="d">Limited runs. When a batch is gone, it stays gone. No restocks, no apologies.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · RESERVE (one CTA) -->
+<section class="reserve">
+  <div class="k reveal">New drop loading</div>
+  <h2 class="reveal">Get it before <em>it rots.</em></h2>
+  <p class="body reveal" style="margin:0 auto">Drops sell out in one run. Get on the list and you hear first.</p>
+  <a class="cta reveal" href="#waitlist">Get on the list</a>
+</section>
+
+<!-- 8 · FOOTER -->
+<footer><span>DUMB JOCKS · TACOMA, WA · <em>SINCE 2013</em></span></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+const lenis = new Lenis({lerp:0.1});
+function raf(t){lenis.raf(t);requestAnimationFrame(raf)}
+requestAnimationFrame(raf);
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+
+// hero settles in
+gsap.from('.hwm > *',{y:50,opacity:0,duration:1.2,ease:'power3.out',stagger:0.12,delay:0.2});
+
+// reveals
+document.querySelectorAll('.reveal').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 86%'}});
+});
+
+// anchor links respect lenis
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();lenis.scrollTo(a.getAttribute('href'),{offset:-40})});
+});
+</script>
+</body>
+</html>
