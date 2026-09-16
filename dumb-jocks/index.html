@@ -308,10 +308,9 @@ gsap.from('.hwm > *',{y:50,opacity:0,duration:1.2,ease:'power3.out',stagger:0.12
 // img: a photo URL or local path (optional; leave '' for a styled placeholder)
 // soldOut: true shows a SOLD OUT tag
 const PRODUCTS = [
-  {name:'Product name 01', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
-  {name:'Product name 02', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
-  {name:'Product name 03', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
-  {name:'Product name 04', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
+  {name:'Iverson Define Yourself Tee', price:'', url:'https://www.dumbjocks.store/product-page/iverson-define-yourself-tee', img:'', soldOut:false},
+  {name:'Sonics Tee + Hoodie', price:'', url:'https://www.dumbjocks.store/product-page/dumb-jocks-sonics-tee-hoodie', img:'', soldOut:false},
+  {name:'Pray For My Opposition Rodman Tee', price:'', url:'https://www.dumbjocks.store/product-page/pray-for-my-opposition-rodman-tee', img:'', soldOut:false},
 ];
 const grid = document.getElementById('shopGrid');
 if(grid){
@@ -326,9 +325,10 @@ if(grid){
     if(p.soldOut){const s=document.createElement('span'); s.className='soldout'; s.textContent='Sold out'; shot.appendChild(s);}
     const meta=document.createElement('div'); meta.className='meta';
     const nm=document.createElement('div'); nm.className='name'; nm.textContent=p.name||'';
-    const pr=document.createElement('div'); pr.className='price'; pr.textContent=p.price||'';
     const go=document.createElement('div'); go.className='go'; go.textContent=p.soldOut?'View →':'Shop →';
-    meta.appendChild(nm); meta.appendChild(pr); meta.appendChild(go);
+    meta.appendChild(nm);
+    if(p.price){const pr=document.createElement('div'); pr.className='price'; pr.textContent=p.price; meta.appendChild(pr);}
+    meta.appendChild(go);
     a.appendChild(shot); a.appendChild(meta);
     grid.appendChild(a);
   });
