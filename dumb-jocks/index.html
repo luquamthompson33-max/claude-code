@@ -130,6 +130,26 @@ h2{font-family:var(--disp);font-weight:400;font-size:clamp(44px,7vw,104px);line-
 .row .t{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3vw,40px);text-transform:uppercase;letter-spacing:.01em}
 .row .d{font-size:15px;color:var(--muted)}
 
+/* shop grid */
+.shop{margin-top:5vh;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg2);transition:transform .3s ease,border-color .3s ease}
+.card:hover{transform:translateY(-6px);border-color:var(--accent)}
+.card .shot{position:relative;aspect-ratio:3/4;overflow:hidden}
+.card .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.card .shot .ph{position:absolute;inset:0;
+  background:
+    radial-gradient(60% 60% at 35% 35%, oklch(0.34 0.15 150 / .8), transparent 70%),
+    radial-gradient(50% 50% at 75% 70%, oklch(0.26 0.11 160 / .75), transparent 72%),
+    var(--bg2);}
+.card .shot .ph::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg, transparent 0 3px, oklch(0.1 0.02 155/.25) 3px 4px);opacity:.5;}
+.card .shot .soldout{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--muted);padding:4px 8px;border-radius:3px}
+.card .meta{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card .name{font-family:var(--disp);font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.01em;color:var(--ink);line-height:1.05}
+.card .price{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.card .go{margin-top:auto;padding-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.card:hover .go{color:var(--accent)}
+
 /* band */
 .band{padding:22vh 4vw;text-align:center}
 .band h2{max-width:20ch;margin:0 auto}
@@ -250,6 +270,15 @@ footer em{color:var(--accent)}
   </div>
 </section>
 
+<!-- 6b · SHOP THE DROP (product cards -> each item) -->
+<section id="shop">
+  <div class="wrap">
+    <div class="k reveal">Shop the drop</div>
+    <h2 class="reveal" style="max-width:16ch">Pick your <em>poison.</em></h2>
+    <div class="shop" id="shopGrid"><!-- cards injected from PRODUCTS below --></div>
+  </div>
+</section>
+
 <!-- 7 · RESERVE (one CTA) -->
 <section class="reserve">
   <div class="k reveal">New drop loading</div>
@@ -273,6 +302,37 @@ lenis.on('scroll', ScrollTrigger.update);
 
 // hero settles in
 gsap.from('.hwm > *',{y:50,opacity:0,duration:1.2,ease:'power3.out',stagger:0.12,delay:0.2});
+
+// ---------- SHOP: edit this list, one object per product ----------
+// name: shown on the card · price: any string · url: that product's page on your store
+// img: a photo URL or local path (optional; leave '' for a styled placeholder)
+// soldOut: true shows a SOLD OUT tag
+const PRODUCTS = [
+  {name:'Product name 01', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
+  {name:'Product name 02', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
+  {name:'Product name 03', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
+  {name:'Product name 04', price:'$00', url:'https://www.dumbjocks.store/', img:'', soldOut:false},
+];
+const grid = document.getElementById('shopGrid');
+if(grid){
+  PRODUCTS.forEach(p=>{
+    const a=document.createElement('a');
+    a.className='card reveal';
+    a.href=p.url||'https://www.dumbjocks.store/';
+    a.target='_blank'; a.rel='noopener';
+    const shot=document.createElement('div'); shot.className='shot';
+    if(p.img){const im=document.createElement('img'); im.src=p.img; im.alt=p.name||''; im.loading='lazy'; shot.appendChild(im);}
+    else{const ph=document.createElement('div'); ph.className='ph'; shot.appendChild(ph);}
+    if(p.soldOut){const s=document.createElement('span'); s.className='soldout'; s.textContent='Sold out'; shot.appendChild(s);}
+    const meta=document.createElement('div'); meta.className='meta';
+    const nm=document.createElement('div'); nm.className='name'; nm.textContent=p.name||'';
+    const pr=document.createElement('div'); pr.className='price'; pr.textContent=p.price||'';
+    const go=document.createElement('div'); go.className='go'; go.textContent=p.soldOut?'View →':'Shop →';
+    meta.appendChild(nm); meta.appendChild(pr); meta.appendChild(go);
+    a.appendChild(shot); a.appendChild(meta);
+    grid.appendChild(a);
+  });
+}
 
 // reveals
 document.querySelectorAll('.reveal').forEach(el=>{
