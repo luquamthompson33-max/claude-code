@@ -3,267 +3,317 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Branding and automation for people who want to create something that is theirs. Get a free 90-day Blueprint.">
 <title>Create Your Utopia</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<meta name="description" content="Branding and automation for people who want to create something that is theirs. Get a free 90-day Blueprint.">
+<link rel="icon" href="badge.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: drafting-sheet page on faint grid paper; hero + live Blueprint tool first, then what you get, how it works, booking. */
+/* Brand look taken from the logo: deep navy, globe teal, white. Single light theme on purpose. */
 :root {
-  --paper: #f2f5f8;
-  --sheet: #ffffff;
-  --ink: #14233a;
-  --ink-soft: #4a5a72;
-  --line: #d5dde7;
-  --grid: rgba(20, 35, 58, 0.05);
-  --accent: #d9930b;
-  --accent-ink: #1b1305;
-  --accent-soft: #fbefd4;
-  --focus: #2f6fd6;
-  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --navy: #14154a;
+  --navy-2: #1d1f5e;
+  --navy-deep: #0c0d33;
+  --teal: #05a99b;
+  --teal-bright: #2fd3c3;
+  --teal-soft: #e3f6f3;
+  --white: #ffffff;
+  --mist: #f3f5fa;
+  --ink-soft: #4b4f7a;
+  --line: #dfe2ee;
+  --f-display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Figtree", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0d1726; --sheet: #13213a; --ink: #e8eef6; --ink-soft: #a3b2c7;
-    --line: #2a3b57; --grid: rgba(232, 238, 246, 0.04); --accent: #f0b23a;
-    --accent-ink: #1b1305; --accent-soft: #3a2c0f; --focus: #7fb0ff; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0d1726; --sheet: #13213a; --ink: #e8eef6; --ink-soft: #a3b2c7;
-  --line: #2a3b57; --grid: rgba(232, 238, 246, 0.04); --accent: #f0b23a;
-  --accent-ink: #1b1305; --accent-soft: #3a2c0f; --focus: #7fb0ff; color-scheme: dark;
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; }
-img { max-width: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--white); color: var(--navy); font-family: var(--f-body); font-size: 17px; line-height: 1.6; }
+img { max-width: 100%; height: auto; display: block; }
 [hidden] { display: none !important; }
-body {
-  background-color: var(--paper);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--ink);
-  font-family: var(--f-body);
-  font-size: 17px;
-  line-height: 1.6;
-}
-.wrap {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.08; }
 p { margin: 0; }
-.label {
-  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--ink-soft);
-}
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { margin: 0; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; line-height: 0.98; letter-spacing: -0.01em; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
 
-/* Top bar */
-.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; }
-.mark { font-family: var(--f-display); font-weight: 800; font-size: 20px; letter-spacing: -0.01em; text-decoration: none; }
-.mark span { color: var(--accent); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--f-display); font-stretch: 112%; font-weight: 700; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal); }
 
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  font-family: var(--f-body); font-weight: 600; font-size: 16px;
-  padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--ink);
-  background: var(--ink); color: var(--paper); text-decoration: none; cursor: pointer;
-  transition: transform .15s ease, background .15s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 16px 26px; border-radius: 999px; border: 2px solid var(--navy);
+  background: var(--navy); color: var(--white); text-decoration: none; cursor: pointer;
+  transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn.ghost { background: transparent; color: var(--ink); }
-.btn.accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn[disabled], .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; transform: none; }
+.btn:hover { transform: translateY(-2px); }
+.btn .arrow { transition: transform .15s ease; }
+.btn:hover .arrow { transform: translateX(3px); }
+.btn.teal { background: var(--teal); border-color: var(--teal); color: var(--navy); }
+.btn.teal:hover { background: var(--teal-bright); border-color: var(--teal-bright); }
+.btn.outline { background: transparent; color: var(--navy); }
+.btn.outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.5); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* Header */
+.top { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 46px; height: auto; }
+.brand span { font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: 17px; letter-spacing: 0.01em; text-transform: uppercase; line-height: 1; }
+.top .btn { padding: 11px 18px; font-size: 13px; white-space: nowrap; }
 
 /* Hero */
-.hero { display: grid; gap: 22px; padding-block: 36px 40px; max-width: 820px; }
-.hero h1 { font-size: clamp(38px, 6.4vw, 72px); font-weight: 800; letter-spacing: -0.025em; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero .sub { font-size: clamp(18px, 2.2vw, 21px); color: var(--ink-soft); max-width: 62ch; }
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 64px 72px; }
+.hero-copy { display: grid; gap: 26px; }
+.hero h1 { font-size: clamp(34px, 4.5vw, 62px); }
+.hero h1 .hl { color: var(--teal); }
+.hero .sub { font-size: clamp(18px, 2vw, 21px); color: var(--ink-soft); max-width: 56ch; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-mark { position: relative; justify-self: center; width: min(100%, 380px); }
+.hero-mark::before {
+  content: ""; position: absolute; inset: -12% -10%; border-radius: 50%;
+  background: radial-gradient(circle, var(--teal-soft) 0%, rgba(227,246,243,0) 68%);
+}
+.hero-mark img { position: relative; width: 100%; }
 
-/* Tool */
-.tool {
-  background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 6px;
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  box-shadow: 8px 8px 0 var(--line);
-}
+/* Tool band */
+.band-navy { position: relative; background: var(--navy); color: var(--white); overflow: hidden; }
+.band-navy .globe { position: absolute; right: -180px; top: -140px; width: 620px; height: 620px; opacity: .14; pointer-events: none; }
+.band-navy .wrap { position: relative; padding-block: 76px 84px; display: grid; gap: 34px; }
+.band-head { display: grid; gap: 14px; max-width: 760px; }
+.band-head h2 { font-size: clamp(32px, 4.6vw, 58px); }
+.band-head h2 .hl { color: var(--teal-bright); }
+.band-head p { color: #c9cbe6; font-size: 19px; max-width: 58ch; }
+
+.tool { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--white); color: var(--navy); border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
 .tool > * { min-width: 0; }
-.ask { padding: 28px; border-right: 1.5px dashed var(--line); display: grid; gap: 16px; align-content: start; }
-.ask h2 { font-size: 26px; font-weight: 700; }
+.ask { padding: 32px; display: grid; gap: 16px; align-content: start; background: var(--mist); }
+.ask h3 { font-size: 22px; }
 .ask label { font-weight: 600; }
-textarea {
-  width: 100%; min-height: 150px; resize: vertical; font: inherit; font-size: 16px;
-  color: var(--ink); background: var(--paper); border: 1.5px solid var(--line);
-  border-radius: 6px; padding: 14px;
-}
-textarea:focus { border-color: var(--ink); outline: none; }
+textarea { width: 100%; min-height: 150px; resize: vertical; font: inherit; font-size: 16px; color: var(--navy); background: var(--white); border: 2px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+textarea:focus { border-color: var(--teal); outline: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  font: inherit; font-size: 14px; color: var(--ink); background: transparent;
-  border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; text-align: left;
-}
-.chip:hover { border-color: var(--ink); }
+.chip { font: inherit; font-size: 14px; font-weight: 500; color: var(--navy); background: var(--white); border: 1.5px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; text-align: left; transition: border-color .15s ease, background .15s ease; }
+.chip:hover { border-color: var(--teal); background: var(--teal-soft); }
 .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .note { font-size: 14px; color: var(--ink-soft); }
-.note.err { color: var(--ink); background: var(--accent-soft); padding: 10px 12px; border-radius: 6px; }
+.note.err { color: var(--navy); background: #fff1d6; padding: 10px 14px; border-radius: 10px; }
 
 /* Blueprint output */
-.bp { padding: 28px; display: grid; gap: 22px; align-content: start; }
-.bp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1.5px solid var(--ink); padding-bottom: 12px; }
-.tag { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; }
-.situation { font-family: var(--f-display); font-size: 22px; font-weight: 700; line-height: 1.25; }
+.bp { padding: 32px; display: grid; gap: 22px; align-content: start; }
+.bp-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 3px solid var(--navy); }
+.label { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+.tag { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; background: var(--teal); color: var(--navy); padding: 5px 10px; border-radius: 999px; }
+.situation { font-family: var(--f-display); font-stretch: 105%; font-weight: 800; font-size: 23px; line-height: 1.22; }
 .world { display: flex; gap: 8px; flex-wrap: wrap; }
-.world b { font-family: var(--f-mono); font-weight: 500; font-size: 13px; border: 1px solid var(--ink); border-radius: 4px; padding: 2px 8px; }
-.phases { display: grid; gap: 14px; }
-.phase { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; }
-.phase .when { font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft); line-height: 1.4; padding-top: 3px; }
-.phase .when strong { display: block; color: var(--accent); font-size: 13px; font-weight: 500; }
-.phase h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.world b { font-size: 13px; font-weight: 700; background: var(--teal-soft); color: var(--navy); border-radius: 999px; padding: 4px 12px; }
+.phases { display: grid; gap: 12px; }
+.phase { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 16px; border-radius: 14px; background: var(--mist); }
+.phase .when { font-size: 13px; color: var(--ink-soft); line-height: 1.35; }
+.phase .when strong { display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: 15px; letter-spacing: .02em; text-transform: uppercase; color: var(--teal); margin-bottom: 2px; }
+.phase h3 { font-family: var(--f-body); font-stretch: 100%; text-transform: none; letter-spacing: 0; font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
 ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
-.block h3 { font-size: 13px; font-family: var(--f-mono); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin-bottom: 8px; }
-.pairs { display: grid; gap: 8px; }
-.pair { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 12px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+li::marker { color: var(--teal); }
+.block h3 { font-family: var(--f-display); font-stretch: 112%; font-size: 12px; font-weight: 800; letter-spacing: .18em; color: var(--ink-soft); margin-bottom: 10px; }
+.pairs { display: grid; gap: 10px; }
+.pair { display: grid; grid-template-columns: minmax(0, 160px) minmax(0, 1fr); gap: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .pair:last-child { border-bottom: 0; padding-bottom: 0; }
-.pair b { font-weight: 600; }
-ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
-ol.steps li::marker { font-family: var(--f-mono); color: var(--accent); }
-.closing { font-family: var(--f-display); font-weight: 700; font-size: 18px; border-top: 1.5px solid var(--ink); padding-top: 14px; }
-.thinking { font-family: var(--f-mono); font-size: 14px; color: var(--ink-soft); }
-.thinking::after { content: "▍"; animation: blink 1s steps(1) infinite; margin-left: 2px; }
+.pair b { font-weight: 700; }
+ol.steps { margin: 0; padding-left: 24px; display: grid; gap: 6px; }
+ol.steps li::marker { font-family: var(--f-display); font-weight: 900; color: var(--teal); }
+.closing { font-family: var(--f-display); font-stretch: 105%; font-weight: 800; font-size: 18px; line-height: 1.3; background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 14px; }
+.closing a { color: var(--teal-bright); }
+.thinking { font-size: 15px; color: var(--ink-soft); }
+.thinking::after { content: "▍"; color: var(--teal); animation: blink 1s steps(1) infinite; margin-left: 2px; }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* Sections */
-section.band { padding-block: 72px 8px; display: grid; gap: 28px; }
-section.band h2 { font-size: clamp(30px, 4.2vw, 46px); font-weight: 800; letter-spacing: -0.02em; max-width: 22ch; }
-.lede { font-size: 19px; color: var(--ink-soft); max-width: 62ch; }
+.section .wrap { padding-block: 88px 0; display: grid; gap: 34px; }
+.section h2 { font-size: clamp(30px, 4.2vw, 54px); max-width: 22ch; }
+.section h2 .hl { color: var(--teal); }
 .gets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.get { background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: grid; gap: 8px; align-content: start; }
-.get h3 { font-size: 21px; font-weight: 700; }
+.get { position: relative; border: 2px solid var(--navy); border-radius: 20px; padding: 28px; display: grid; gap: 10px; align-content: start; background: var(--white); transition: transform .2s ease, box-shadow .2s ease; }
+.get:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--teal); }
+.get h3 { font-size: 22px; }
 .get p { color: var(--ink-soft); font-size: 16px; }
-.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1.5px solid var(--ink); border-radius: 6px; background: var(--sheet); }
-.split > div { padding: 26px; display: grid; gap: 10px; align-content: start; }
-.split > div + div { border-left: 1.5px dashed var(--line); }
-.split h3 { font-size: 24px; font-weight: 700; }
-.split p { color: var(--ink-soft); }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.split > div { border-radius: 20px; padding: 34px; display: grid; gap: 12px; align-content: start; }
+.split .hand { background: var(--navy); color: var(--white); }
+.split .hand p { color: #c9cbe6; }
+.split .ai { background: var(--teal); color: var(--navy); }
+.split .ai .eyebrow { color: var(--navy); }
+.split h3 { font-size: clamp(24px, 3vw, 32px); }
+.split .hand .eyebrow { color: var(--teal-bright); }
 
-.book { margin-block: 72px 56px; background: var(--ink); color: var(--paper); border-radius: 6px; padding: clamp(28px, 5vw, 56px); display: grid; gap: 18px; }
-.book h2 { font-size: clamp(30px, 4.4vw, 50px); font-weight: 800; letter-spacing: -0.02em; max-width: 20ch; }
-.book p { color: var(--paper); opacity: .82; max-width: 56ch; font-size: 18px; }
-.book .label { color: var(--accent); }
-footer { padding-block: 0 40px; color: var(--ink-soft); font-size: 14px; }
+.book { margin-top: 88px; background: var(--teal); color: var(--navy); position: relative; overflow: hidden; }
+.book .globe { position: absolute; left: -160px; bottom: -220px; width: 560px; height: 560px; opacity: .18; pointer-events: none; }
+.book .wrap { position: relative; padding-block: 80px; display: grid; gap: 22px; justify-items: start; }
+.book h2 { font-size: clamp(34px, 5.4vw, 70px); max-width: 16ch; }
+.book p { font-size: 19px; max-width: 54ch; }
+.book .eyebrow { color: var(--navy); }
 
-@media (max-width: 820px) {
+footer { background: var(--navy-deep); color: #c9cbe6; }
+footer .wrap { padding-block: 34px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; font-size: 14px; }
+footer .brand span { color: var(--white); font-size: 15px; }
+footer .brand img { width: 36px; background: var(--white); border-radius: 8px; padding: 3px; }
+footer .tagline { font-family: var(--f-display); font-stretch: 112%; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: 12px; color: var(--teal-bright); }
+
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 40px 56px; }
+  .hero-mark { display: none; }
   .tool { grid-template-columns: minmax(0, 1fr); }
-  .ask { border-right: 0; border-bottom: 1.5px dashed var(--line); }
-  .gets { grid-template-columns: minmax(0, 1fr); }
-  .split { grid-template-columns: minmax(0, 1fr); }
-  .split > div + div { border-left: 0; border-top: 1.5px dashed var(--line); }
+  .gets, .split { grid-template-columns: minmax(0, 1fr); }
 }
-@media (max-width: 480px) {
-  .ask, .bp { padding: 20px; }
-  .phase { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+@media (max-width: 520px) {
+  .brand span { font-size: 14px; }
+  .brand img { width: 38px; }
+  .top .btn { padding: 10px 14px; font-size: 12px; }
+  .ask, .bp { padding: 22px; }
+  .phase { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .pair { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-  .tool { box-shadow: 4px 4px 0 var(--line); }
+  .split > div, .get { padding: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn, .thinking::after { transition: none; animation: none; }
+  html { scroll-behavior: auto; }
+  .btn, .get, .chip, .thinking::after { transition: none; animation: none; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <a class="mark" href="#top">Create Your <span>Utopia</span></a>
-    <a class="btn ghost book-link" href="#book">Book a call</a>
-  </header>
 
-  <main id="top">
-    <div class="hero">
-      <p class="label">Branding + automation studio</p>
-      <h1>You've got an idea, a craft, or a small business, and you <em>don't know where to start.</em></h1>
-      <p class="sub">Maybe you have zero knowledge about starting a business. Maybe all the "build your brand" advice online fries your brain. Tell me what you want to create and get a free Blueprint you can act on today.</p>
-    </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="globe" viewBox="0 0 200 200">
+    <g fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="100" cy="100" r="96"/>
+      <ellipse cx="100" cy="100" rx="64" ry="96"/>
+      <ellipse cx="100" cy="100" rx="30" ry="96"/>
+      <line x1="100" y1="4" x2="100" y2="196"/>
+      <line x1="4" y1="100" x2="196" y2="100"/>
+      <path d="M14 56 Q100 76 186 56"/>
+      <path d="M14 144 Q100 124 186 144"/>
+      <path d="M40 24 Q100 38 160 24"/>
+      <path d="M40 176 Q100 162 160 176"/>
+    </g>
+  </symbol>
+</svg>
 
-    <div class="tool" id="tool">
-      <form class="ask" id="askForm">
-        <h2>What do you want to create?</h2>
-        <label for="dream">Describe your idea or your business in a sentence or two.</label>
-        <textarea id="dream" maxlength="1500" placeholder="I make candles on weekends and want to turn it into a real shop."></textarea>
-        <div class="chips" aria-label="Examples">
-          <button type="button" class="chip">I make candles on weekends and want to turn it into a real shop</button>
-          <button type="button" class="chip">I run a small cleaning company and scheduling eats my whole week</button>
-          <button type="button" class="chip">I'm 20 and want to start a trendy clothing brand on Instagram</button>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="badge.png" alt="" width="46" height="40"><span>Create Your Utopia</span></a>
+    <a class="btn" href="#book">Book a call</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Turn visions to reality</p>
+        <h1>Got an idea, a craft, or a small business? <span class="hl">Don't know where to start?</span></h1>
+        <p class="sub">Maybe you have zero knowledge about starting a business. Maybe all the "build your brand" advice online fries your brain. Tell me what you want to create and get a free Blueprint you can act on today.</p>
+        <div class="ctas">
+          <a class="btn teal" href="#tool">Get my free Blueprint <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn outline" href="#how">How it works</a>
         </div>
-        <div class="row">
-          <button class="btn accent" id="goBtn" type="submit">Draw my Blueprint</button>
-          <button class="btn ghost" id="stopBtn" type="button" hidden>Stop</button>
-        </div>
-        <p class="note" id="note">Free. Takes about a minute.</p>
-      </form>
-
-      <div class="bp" id="bp" aria-live="polite"></div>
+      </div>
+      <div class="hero-mark"><img src="badge.png" alt="Create Your Utopia badge: a globe with the CYU monogram" width="452" height="390"></div>
     </div>
+  </section>
 
-    <section class="band" id="get">
-      <p class="label">What you walk away with</p>
-      <h2>A plan, a finished brand, and busywork that runs itself.</h2>
+  <section class="band-navy" id="tool">
+    <svg class="globe" aria-hidden="true" style="color: var(--teal-bright)"><use href="#globe"/></svg>
+    <div class="wrap">
+      <div class="band-head">
+        <p class="eyebrow" style="color: var(--teal-bright)">Free Blueprint</p>
+        <h2>Your first 90 days, <span class="hl">drawn in a minute.</span></h2>
+        <p>Describe your idea or your business. You'll get a 3-phase plan, what to automate, the AI tools to use, and three steps you can take today.</p>
+      </div>
+
+      <div class="tool">
+        <form class="ask" id="askForm">
+          <h3>What do you want to create?</h3>
+          <label for="dream">Describe your idea or your business in a sentence or two.</label>
+          <textarea id="dream" maxlength="1500" placeholder="I make candles on weekends and want to turn it into a real shop."></textarea>
+          <div class="chips" aria-label="Examples">
+            <button type="button" class="chip">I make candles on weekends and want to turn it into a real shop</button>
+            <button type="button" class="chip">I run a small cleaning company and scheduling eats my whole week</button>
+            <button type="button" class="chip">I'm 20 and want to start a trendy clothing brand on Instagram</button>
+          </div>
+          <div class="row">
+            <button class="btn teal" id="goBtn" type="submit">Draw my Blueprint</button>
+            <button class="btn outline" id="stopBtn" type="button" hidden>Stop</button>
+          </div>
+          <p class="note" id="note">Free. Takes about a minute.</p>
+        </form>
+
+        <div class="bp" id="bp" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="get">
+    <div class="wrap">
+      <p class="eyebrow">What you walk away with</p>
+      <h2>A plan, a brand, and <span class="hl">busywork that runs itself.</span></h2>
       <div class="gets">
         <div class="get">
-          <p class="label">The plan</p>
+          <p class="eyebrow">The plan</p>
           <h3>What to focus on first</h3>
           <p>A clear 90-day path from where you are now: what to launch this week, what to build next, and how it starts to grow.</p>
         </div>
         <div class="get">
-          <p class="label">The brand</p>
+          <p class="eyebrow">The brand</p>
           <h3>A brand that looks real</h3>
           <p>Logo, brand identity and brand guide, in files you own and can use anywhere, from your Instagram to your printed cards.</p>
         </div>
         <div class="get">
-          <p class="label">The systems</p>
+          <p class="eyebrow">The systems</p>
           <h3>Less busywork</h3>
           <p>Posting, follow-ups and booking set up to run on their own, so you get your time and energy back.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="band" id="how">
-      <p class="label">How I work</p>
-      <h2>I design your brand. AI runs your systems.</h2>
+  <section class="section" id="how">
+    <div class="wrap">
+      <p class="eyebrow">How I work</p>
+      <h2>I design your brand. <span class="hl">AI runs your systems.</span></h2>
       <div class="split">
-        <div>
-          <p class="label">By hand</p>
+        <div class="hand">
+          <p class="eyebrow">By hand</p>
           <h3>Your brand</h3>
           <p>I read your brief and I listen. Then I design your brand myself. No templates, and no AI-generated logos.</p>
         </div>
-        <div>
-          <p class="label">With AI</p>
+        <div class="ai">
+          <p class="eyebrow">With AI</p>
           <h3>Your systems</h3>
           <p>I set up AI tools to handle the repetitive work that drains your time and energy, like posting, replying to inquiries and follow-ups.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="book" id="book">
-      <p class="label">Next step</p>
+  <section class="book" id="book">
+    <svg class="globe" aria-hidden="true" style="color: var(--navy)"><use href="#globe"/></svg>
+    <div class="wrap">
+      <p class="eyebrow">Next step</p>
       <h2>Test the waters without bankrupting yourself.</h2>
       <p>Book a call. We'll look at your Blueprint together and work out what you need first.</p>
-      <div class="row">
-        <a class="btn accent book-link" id="bookBtn" href="#book">Book a call</a>
-      </div>
-    </section>
-  </main>
+      <a class="btn" id="bookBtn" href="#book">Book a call <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</main>
 
-  <footer>Create Your Utopia. Everyone should create something that is theirs.</footer>
-</div>
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="badge.png" alt="" width="36" height="31"><span>Create Your Utopia</span></a>
+    <p class="tagline">Turn visions to reality</p>
+  </div>
+</footer>
 
 <script>
 // Paste your scheduling link here (Calendly, Cal.com, etc.). Until then the Book button says "Booking opens soon".
