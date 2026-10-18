@@ -98,7 +98,10 @@ export default async function handler(req, res) {
       console.error("Anthropic API error", err.status, err.message);
       return res.status(502).json({ error: "upstream" });
     }
-    console.error(err);
-    return res.status(500).json({ error: "server" });
+        const message = String(err?.message || "");
+    if (!process.env.ANTHROPIC_API_KEY || /authentication|apiKey/i.test(message)) {
+      return res.status(500).json({ error: "server_config", detail: "ANTHROPIC_API_KEY is not visible to this function" });
+    }
+    return res.status(500).json({ error: "server", detail: `${err?.name || "Error"}: ${message.slice(0, 200)}` });
   }
 }
